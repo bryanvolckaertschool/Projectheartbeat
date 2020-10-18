@@ -1,0 +1,24 @@
+{
+  "name": "eigennodejsscripts",
+  "version": "1.0.0",
+  "description": "Eigen scripts voor project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bryan Volckaert, Melvin Devos",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "express": "^4.17.1",
+    "fetch": "^1.1.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "ProjectHeartbeat",
+    "PHB",
+    "ProjectHB"
+  ]
+}
