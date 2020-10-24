@@ -126,7 +126,7 @@ function getboxid(){
 			});
 			
 		}
-		catch{
+		catch(error){
 			res.sendStatus(404)
 			console.log(`${error}`)
 		}
