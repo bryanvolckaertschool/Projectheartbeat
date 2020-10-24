@@ -16,6 +16,9 @@ app.use("/api", api);
 const auth = require("./Routes/auth.js");
 app.use("/auth", auth);
 
+const playback = require("./Routes/playback.js");
+app.use("/playback",playback);
+
 const port = process.env.port || 3000;
 
 app.listen(port, () => {

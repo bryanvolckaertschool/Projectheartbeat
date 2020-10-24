@@ -69,15 +69,17 @@ router.post("/register", (req, res) => {
 
 router.post("/login", async (req, res) => {
   const validationObject = await schemaLogin.validate(req.body);
+  console.log(req.body)
+  console.log(validationObject)
   if (validationObject.error)
     return res.status(400).send(validationObject.error.details[0].message);
-
+  
   let Email = connection.escape(req.body.Email);
   let Wachtwoord = connection.escape(req.body.Wachtwoord);
 
   let sql =
     "SELECT Naam, Email, Wachtwoord FROM admins WHERE Email =" + Email + "";
-
+  
   const login = connection.query(sql, (err, result) => {
     if (err) return res.status(400).send(err);
     if (Object.keys(result).length === 0)
