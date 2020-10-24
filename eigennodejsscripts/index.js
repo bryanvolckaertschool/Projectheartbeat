@@ -47,7 +47,7 @@ app.get('/startplayback/:id',(req, res) => {
 			console.log(`${err}`)
 		});
 	}
-	catch{
+	catch(error){
 		res.sendStatus(404)
 		console.log(`${error}`)
 	}
