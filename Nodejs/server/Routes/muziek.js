@@ -10,12 +10,15 @@ router.get("/", (req, res) => {
 });
 
 router.post("/add", verify ,(req,res) => {
+    let PersonID = connection.escape(req.body.personid);
     let Naam = connection.escape(req.body.Naam);
     let SongID = connection.escape(req.body.SongID);
     let Duratie = connection.escape(req.body.Duratie);
-  
+    
     let sql =
-      "INSERT INTO muziek (naam, songid, duratie) VALUES (" +
+      "INSERT INTO muziek (personid, naam, songid, duratie) VALUES (" +
+      PersonID +
+      ", " +
       Naam +
       ", " +
       SongID +
@@ -34,7 +37,32 @@ router.post("/add", verify ,(req,res) => {
 });
 
 router.delete("/delete", (req, res) => {
+    let PersonID = connection.escape(req.body.personid);
+    let SongID = connection.escape(req.body.SongID);
 
+    let sql =
+      "DELETE FROM muziek WHERE " + "personid =" + PersonID + " AND songid ="  + SongID;
+  
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(400).send(err);
+        //niet nodig want res.json doet dit ook al
+        //res.end();
+      }
+      res.status(200).send(result);
+    });
+});
+
+router.post("/show", verify, (req, res) => {
+  let PersonID = connection.escape(req.body.personid);
+
+  let sql = "SELECT * FROM muziek WHERE personid = " + PersonID + "";
+
+  connection.query(sql, (err, result) => {
+    if (err) res.json(err);
+
+    res.json(result);
+  });
 });
 
 module.exports = router;
