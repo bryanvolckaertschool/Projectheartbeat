@@ -12,9 +12,9 @@ var ok = {response : 'lookup OK'}
 var userid
 
 var con = mysql.createConnection({
-  host: "localhost",//CHANGEME
-  user: "root",//CHANGEME
-  password: "MelvisPelvis",//CHANGEME
+  host: "94.110.140.22",//CHANGEME
+  user: "projectHeartBeatAPI",//CHANGEME
+  password: "BryVin2020",//CHANGEME
   database: "ProjectheartbeatTemp"//CHANGEME
 });
 
