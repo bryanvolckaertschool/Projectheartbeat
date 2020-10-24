@@ -16,11 +16,6 @@ var con = mysql.createConnection({
   database: "testdatabase"//CHANGEME
 });
 
-
-
-
-
-
 app.get('/startplayback/:id',(req, res) => {
 	try{
 		con.connect(function(err) {
@@ -125,3 +120,4 @@ function responsehandeling(response){
 		playmusic();
 	}
 }
+
