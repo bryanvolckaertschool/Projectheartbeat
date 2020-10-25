@@ -48,9 +48,10 @@
 .home {
   height: 100%;
   width: 100%;
-  background-image: url(https://vzwheartbeats.be/wp-content/uploads/2018/11/heartbeats-dementie-ontroering-hoofdtelefoon-contact-8-1920x1280.jpg);
+  background-image: url(http://vzwheartbeats.be/wp-content/uploads/2018/11/heartbeats-dementie-ontroering-hoofdtelefoon-contact-8-1920x1280.jpg);
   background-size: cover;
 }
+
 </style>
 
 
@@ -90,6 +91,7 @@ export default {
         .post(url, postData, axiosConfig)
         .then((res) => {
           if(res.data == "Not the same"){
+            console.log("level word -1")
             store.level = -1
           }
           store.token = res.data.token

@@ -35,17 +35,16 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requireAuth){
     //Need to login
     //console.log(store.token + store.level + to.meta.requiredlevel)
-    if(!(store.level >= to.meta.requiredlevel)){
+    if((store.level >= to.meta.requiredlevel)){
       if(!store.token){
-        next();
+        next({name:"Home"});
       }
       else{
-        next();  
+        next();
       }
     }
     else{
-      next();
-      return("Something went wrong please refresh or contact tech support.");
+      next({name:"Home"});
     }
     
   }
