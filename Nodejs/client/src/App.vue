@@ -1,5 +1,5 @@
 <template>
-  <v-app fill-height>
+  <v-app>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -17,3 +17,4 @@ export default {
 };
 
 </script>
+

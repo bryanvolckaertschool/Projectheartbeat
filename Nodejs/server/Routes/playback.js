@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/start", verify, (req, res) => {
+  console.log("gelukt!")
   let PersonID = connection.escape(req.body.PersonID);
 
   let sql = "SELECT * FROM muziek WHERE personid = " + PersonID + "";
