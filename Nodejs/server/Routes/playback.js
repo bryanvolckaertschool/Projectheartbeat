@@ -1,16 +1,12 @@
 const express = require("express");
 const connection = require("../Modules/db");
 const verify = require("./verifyToken");
-
 const router = express.Router();
-
-//Globale variablen <===BAD CODE
-//const songarray = []
-//var boxid;
+const axios = require("axios");
+const flog = require("../Modules/flog");
 var i = 0;
 var errors = 0;
 var timer;
-var userid;
 
 //Routes
 router.get("/", (req, res) => {
@@ -30,7 +26,7 @@ router.post("/start", verify, (req, res) => {
       result.forEach(function (row) {
         songArray.push(new music(row.songid, row.duratie));
       });
-      let boxId = await getboxid();
+      let boxId = await getboxid(UserID);
       playmusic(songArray, boxId);
       res.status(200).send(songArray);
     }
@@ -47,7 +43,7 @@ class music {
       let seconds = parseInt(splitted[1]) + parseInt(splitted[0]) * 60;
       this.duration = seconds;
     } catch (error) {
-      console.log(`${error}`);
+      flog(`${error}`);
     }
   }
 }
@@ -55,20 +51,21 @@ class music {
 async function playmusic(songArray, boxId) {
   clearTimeout(timer);
 
+
   if (errors < 10) {
-    console.log(`starting after error: ${errors}`);
+    flog(`starting after error: ${errors}`);
 
     try {
       
 
-      const url = `http://192.168.8.17:3000/device/${boxId}/playMedia`; //CHANGEME STATICIP
+      const url = `http://${process.env.yasip}:3000/device/${boxId}/playMedia`; 
       axios
         .post(
           url,
           [
             {
               mediaType: "MP3",
-              mediaUrl: `http://192.168.8.17:256/${songarray[i].Id}.mp3`, //CHANGEME STATICIP
+              mediaUrl: `http://${process.env.yasip}:256/${songArray[i].Id}.mp3`,
             },
           ],
           {
@@ -81,54 +78,47 @@ async function playmusic(songArray, boxId) {
         .then((response) => responsehandeling(response))
         .catch((error) => playbackerror(error));
       if (errors == 0) {
-        console.log(
-          `start music playback for song: ${songarray[i].Id} on box: ${boxId}`
+        flog(
+          `start music playback for song: ${songArray[i].Id} on box: ${boxId}`
         );
-        timer = setTimeout(playmusic, songarray[i].duration * 1000);
+        timer = setTimeout(playmusic, songArray[i].duration * 1000);
         i++;
       }
     } catch (error) {
-      if (songarray[i] == undefined) {
+      if (songArray[i] == undefined) {
         i = 0;
         //playmusic()
       } else {
-        console.log(`${error}`);
+        flog(`${error}`);
       }
     }
   }
 }
 
-function getboxid() {
+function getboxid(UserID) {
   return new Promise((resolve) => {
-    try {
-      con.connect(function (err) {
-        con.query(`SELECT *  FROM users WHERE personid = ${userid}`, function (
-          err,
-          result,
-          fields
-        ) {
-          result.forEach(function (row) {
-            console.log(`Found box with id: ${row.boxid}`);
+
+      let sql = "SELECT *  FROM users WHERE personid = " + UserID + "";
+
+      connection.query(sql, async (err, result) => {
+        if (err) return res.status(400).send(err);
+
+        result.forEach(function (row) {
+            flog(`Found box with id: ${row.boxid}`);
             boxid = row.boxid;
-            resolve("resolved");
+            resolve(boxid);
           });
-          //res.json(ok)
-        });
-      });
-    } catch (error) {
-      res.sendStatus(404);
-      console.log(`${error}`);
-    }
+      });   
   });
 }
 
 function playbackerror(error) {
   if (errors > 10) {
-    console.log("Giving up playback does not work even after 10 tries");
+    flog("Giving up playback does not work even after 10 tries");
     return;
   }
   errors++;
-  console.log(
+  flog(
     `Unable to play music retrying... and waiting 1 minute number of errors: ${errors}`
   );
   timer = setTimeout(playmusic, 60 * 60 * 10);
@@ -138,11 +128,11 @@ function playbackerror(error) {
 }
 
 function responsehandeling(response) {
-  console.log(response.data);
+  flog(response.data);
   if (response.data.connection == "not found") {
     playbackerror(response.data.connection);
   } else if (response.data.response == "ok") {
-    console.log(response.data);
+    //flog(response.data);
     errors = 0;
   } else {
     i = 0;

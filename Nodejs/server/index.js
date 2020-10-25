@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./Modules/db");
-
 const app = express();
+
 
 //Middleware
 app.use(bodyParser.json());
@@ -12,6 +12,10 @@ app.use(cors());
 //Middleware routes
 const api = require("./Routes/api.js");
 app.use("/api", api);
+
+const muziek = require("./Routes/muziek.js");
+app.use("/muziek", muziek);
+
 
 const auth = require("./Routes/auth.js");
 app.use("/auth", auth);
