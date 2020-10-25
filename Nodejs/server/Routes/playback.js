@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
 });
 
 router.post("/start", verify, (req, res) => {
-  let UserID = connection.escape(req.body.id);
+  let PersonID = connection.escape(req.body.PersonID);
 
-  let sql = "SELECT * FROM muziek WHERE personid = " + UserID + "";
+  let sql = "SELECT * FROM muziek WHERE personid = " + PersonID + "";
 
   connection.query(sql, async (err, result) => {
     if (err) return res.status(400).send(err);
@@ -26,14 +26,19 @@ router.post("/start", verify, (req, res) => {
       result.forEach(function (row) {
         songArray.push(new music(row.songid, row.duratie));
       });
-      let boxId = await getboxid(UserID);
+      let boxId = await getboxid(PersonID);
       playmusic(songArray, boxId);
       res.status(200).send(songArray);
     }
   });
 });
 
-module.exports = router;
+router.post("/stop", verify, (req, res) => {
+  let PersonID = connection.escape(req.body.PersonID);        
+  stopmusic(PersonID);
+
+  res.status(200).send("OK");
+});
 
 class music {
   constructor(id = "empty", duration) {
@@ -54,10 +59,7 @@ async function playmusic(songArray, boxId) {
 
   if (errors < 10) {
     flog(`starting after error: ${errors}`);
-
     try {
-      
-
       const url = `http://${process.env.yasip}:3000/device/${boxId}/playMedia`; 
       axios
         .post(
@@ -76,7 +78,7 @@ async function playmusic(songArray, boxId) {
           }
         )
         .then((response) => responsehandeling(response))
-        .catch((error) => playbackerror(error));
+        .catch((error) => playbackerror(error, songArray, boxId));
       if (errors == 0) {
         flog(
           `start music playback for song: ${songArray[i].Id} on box: ${boxId}`
@@ -85,7 +87,12 @@ async function playmusic(songArray, boxId) {
         i++;
       }
     } catch (error) {
+      if(songArray == undefined) flog(`Songarray undefined error`);
       if (songArray[i] == undefined) {
+        if(i == 0)
+        {
+          defaultmusic()
+        }
         i = 0;
         //playmusic()
       } else {
@@ -95,10 +102,43 @@ async function playmusic(songArray, boxId) {
   }
 }
 
-function getboxid(UserID) {
+async function stopmusic(PersonID) {
+  let boxId = await getboxid(PersonID);
+  clearTimeout(timer)
+  const url = `http://${process.env.yasip}:3000/device/${boxId}/stop`; 
+  axios.get(url)
+  .then((response) =>{
+    if (response.data.connection == "not found") {
+       timer = setTimeout(stopmusic, 60 * 60 * 5 );
+    } 
+  }) 
+  .catch((error) => timer = setTimeout(stopmusic, 60 * 60 * 5));
+
+}
+
+function defaultmusic() {
+
+  let sql = "SELECT * FROM muziek WHERE personid = 1";
+
+  connection.query(sql, async (err, result) => {
+    if (err) return res.status(400).send(err);
+
+    if (result != undefined) {
+      let songArray = [];
+      result.forEach(function (row) {
+        songArray.push(new music(row.songid, row.duratie));
+      });
+      let boxId = await getboxid(PersonID);
+      playmusic(songArray, boxId);
+      res.status(200).send(songArray);
+    }
+  });
+}
+
+function getboxid(PersonID) {
   return new Promise((resolve) => {
 
-      let sql = "SELECT *  FROM users WHERE personid = " + UserID + "";
+      let sql = "SELECT *  FROM users WHERE personid = " + PersonID + "";
 
       connection.query(sql, async (err, result) => {
         if (err) return res.status(400).send(err);
@@ -112,7 +152,7 @@ function getboxid(UserID) {
   });
 }
 
-function playbackerror(error) {
+function playbackerror(error, songArray, boxId) {
   if (errors > 10) {
     flog("Giving up playback does not work even after 10 tries");
     return;
@@ -121,14 +161,14 @@ function playbackerror(error) {
   flog(
     `Unable to play music retrying... and waiting 1 minute number of errors: ${errors}`
   );
-  timer = setTimeout(playmusic, 60 * 60 * 10);
+  timer = setTimeout(function(){playmusic(songArray,boxId)}, 60 * 60 * 10);
   if (errors == 0) {
     i = i - 1;
   }
 }
 
 function responsehandeling(response) {
-  flog(response.data);
+  //flog(response.data);
   if (response.data.connection == "not found") {
     playbackerror(response.data.connection);
   } else if (response.data.response == "ok") {
@@ -140,3 +180,5 @@ function responsehandeling(response) {
     playmusic();
   }
 }
+
+module.exports = router;

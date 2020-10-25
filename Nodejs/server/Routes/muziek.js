@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/add", verify ,(req,res) => {
-    let PersonID = connection.escape(req.body.personid);
+    let PersonID = connection.escape(req.body.PersonID);
     let Naam = connection.escape(req.body.Naam);
     let SongID = connection.escape(req.body.SongID);
     let Duratie = connection.escape(req.body.Duratie);
@@ -37,7 +37,7 @@ router.post("/add", verify ,(req,res) => {
 });
 
 router.delete("/delete", (req, res) => {
-    let PersonID = connection.escape(req.body.personid);
+    let PersonID = connection.escape(req.body.PersonID);
     let SongID = connection.escape(req.body.SongID);
 
     let sql =
@@ -54,7 +54,7 @@ router.delete("/delete", (req, res) => {
 });
 
 router.post("/show", verify, (req, res) => {
-  let PersonID = connection.escape(req.body.personid);
+  let PersonID = connection.escape(req.body.PersonID);
 
   let sql = "SELECT * FROM muziek WHERE personid = " + PersonID + "";
 

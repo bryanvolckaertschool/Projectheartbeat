@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const connection = require("../Modules/db");
+const verify = require("./verifyToken");
 
 //Validatie
 const joi = require("@hapi/joi");
@@ -78,7 +79,7 @@ router.post("/login", async (req, res) => {
   let Wachtwoord = connection.escape(req.body.Wachtwoord);
 
   let sql =
-    "SELECT Naam, Email, Wachtwoord FROM admins WHERE Email =" + Email + "";
+    "SELECT Naam, Email, Wachtwoord FROM admins WHERE Email =" + Email;
   
   const login = connection.query(sql, (err, result) => {
     if (err) return res.status(400).send(err);
@@ -97,9 +98,37 @@ router.post("/login", async (req, res) => {
             process.env.TOKEN_SECRET
           );
           return res.header("auth-token", token).status(200).send(token);
-        } else return res.status(400).send("Noth the same");
+        } else return res.status(400).send("Not the same");
       }
     );
+  });
+});
+
+router.delete("/delete", (req, res) => {
+    let ID = connection.escape(req.body.ID);
+
+    let sql =
+      "DELETE FROM admins WHERE " + "ID =" + ID;
+  
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(400).send(err);
+        //niet nodig want res.json doet dit ook al
+        //res.end();
+      }
+      res.status(200).send(result);
+    });
+});
+
+router.post("/show", verify, (req, res) => {
+  let PersonID = connection.escape(req.body.PersonID);
+
+  let sql = "SELECT * FROM admins";
+
+  connection.query(sql, (err, result) => {
+    if (err) res.json(err);
+
+    res.json(result);
   });
 });
 
