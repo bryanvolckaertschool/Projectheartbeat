@@ -53,6 +53,7 @@
 
 <script>
 const axios = require('axios');
+const jwt = require("jsonwebtoken");
 import store from '../store';
 
 export default {
@@ -79,7 +80,10 @@ export default {
         .post(url, postData, axiosConfig)
         .then((res) => {
           store.token = res.data.token
-          console.log(res.data.token)
+          jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function(err, decoded) {
+            store.level = decoded.Level // bar
+          });
+          //console.log(res.data.token)
           this.$router.push("/Dashboard")
         })
         .catch((err) => {

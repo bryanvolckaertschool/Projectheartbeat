@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
   let Wachtwoord = connection.escape(req.body.Wachtwoord);
 
   let sql =
-    "SELECT Naam, Email, Wachtwoord FROM admins WHERE Email =" + Email;
+    "SELECT Naam, Email, Wachtwoord, level FROM admins WHERE Email =" + Email;
   
   const login = connection.query(sql, (err, result) => {
     if (err) return res.status(400).send(err);
@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
         if (same) {
           //Creëer een geef een JWT token
           const token = jwt.sign(
-            { Naam: result[0].Naam }, 
+            { Naam: result[0].Naam, Level: result[0].level }, 
             process.env.TOKEN_SECRET
           );
           return res.header("authtoken", token).status(200).json({"token": token});

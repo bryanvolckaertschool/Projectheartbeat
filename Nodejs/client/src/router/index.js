@@ -21,7 +21,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
-    meta: {requireAuth: true}
+    meta: {requireAuth : true,requiredlevel : 0}
   }
 ]
 
@@ -34,15 +34,21 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(to.meta.requireAuth){
     //Need to login
-    console.log(store.token)
-    if(!store.token){
-      next({
-        name: "Home"
-      });
+    //console.log(store.token + store.level + to.meta.requiredlevel)
+    if(!(store.level >= to.meta.requiredlevel)){
+      if(!store.token){
+        next({
+          name: "Home"
+        });
+      }
+      else{
+        next();
+      }
     }
     else{
       next();
     }
+    
   }
   else{
     next();
