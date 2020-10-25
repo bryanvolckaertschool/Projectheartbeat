@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
             process.env.TOKEN_SECRET
           );
           return res.header("authtoken", token).status(200).json({"token": token});
-        } else return res.status(400).send("Not the same");
+        } else return res.json("Not the same");
       }
     );
   });

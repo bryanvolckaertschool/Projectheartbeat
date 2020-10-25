@@ -37,16 +37,15 @@ router.beforeEach((to, from, next) => {
     //console.log(store.token + store.level + to.meta.requiredlevel)
     if(!(store.level >= to.meta.requiredlevel)){
       if(!store.token){
-        next({
-          name: "Home"
-        });
+        next();
       }
       else{
-        next();
+        next();  
       }
     }
     else{
       next();
+      return("Something went wrong please refresh or contact tech support.");
     }
     
   }

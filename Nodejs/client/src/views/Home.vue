@@ -10,14 +10,17 @@
               <v-text-field
                 label="Email"
                 :type="'email'"
+                :rules="[rules.emailRules]"
                 v-model="Email"
                 prepend-icon="mail"
                 required
               ></v-text-field>
 
+
               <v-text-field
                 label="Wachtwoord"
                 :type="'password'"
+                :rules="[rules.passwordRules]"
                 v-model="Wachtwoord"
                 prepend-icon="lock"
                 required
@@ -51,6 +54,9 @@
 }
 </style>
 
+
+
+
 <script>
 const axios = require('axios');
 const jwt = require("jsonwebtoken");
@@ -61,6 +67,11 @@ export default {
     return {
       Email: "",
       Wachtwoord: "",
+      rules: {
+        passwordRules: v => !!v || "Wachtwoord is vereist",
+        emailRules: v => !!v || "Email is vereist",
+
+      }
     };
   },
   methods: {
@@ -79,15 +90,20 @@ export default {
       axios
         .post(url, postData, axiosConfig)
         .then((res) => {
+          if(res.data == "Not the same"){
+            this.validPassword = false;
+            store.level = -1
+          }
           store.token = res.data.token
+          //console.log(res.data)
+
           jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function(err, decoded) {
-            store.level = decoded.Level // bar
+            if(decoded != undefined){ store.level = decoded.Level; this.validPassword = true;} // bar
           });
-          //console.log(res.data.token)
           this.$router.push("/Dashboard")
         })
         .catch((err) => {
-          console.log("AXIOS ERROR: ", err);
+          console.log(err)   
         });
     },
   },
