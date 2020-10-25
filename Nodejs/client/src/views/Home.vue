@@ -18,6 +18,7 @@
               <v-text-field
                 label="Wachtwoord"
                 :type="'password'"
+                v-model="Wachtwoord"
                 prepend-icon="lock"
                 required
               ></v-text-field>
@@ -52,6 +53,7 @@
 
 <script>
 const axios = require('axios');
+import store from '../store';
 
 export default {
   data() {
@@ -64,19 +66,21 @@ export default {
     login: function () {
 
       var postData = {
-        PersonID: 2,
+        Email: this.Email,
+        Wachtwoord: this.Wachtwoord
       };
       let axiosConfig = {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
-          "auth-token": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYWFtIjoiTWVsdmluIERldm9zIiwiaWF0IjoxNjAzNTU2NzY1fQ.bt_-TBh-CF5ePFd8_MXoeZvMWOkKiR_SS1Xi5_703tE`,
         },
       };
-      const url = `http://localhost:8000/playback/start`;
+      const url = `http://localhost:8000/auth/login`;
       axios
         .post(url, postData, axiosConfig)
-        .then(() => {
-          //console.log("RESPONSE RECEIVED: ", res);
+        .then((res) => {
+          store.token = res.data.token
+          console.log(res.data.token)
+          this.$router.push("/Dashboard")
         })
         .catch((err) => {
           console.log("AXIOS ERROR: ", err);

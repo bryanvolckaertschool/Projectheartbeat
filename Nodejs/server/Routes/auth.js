@@ -94,10 +94,10 @@ router.post("/login", async (req, res) => {
         if (same) {
           //Creëer een geef een JWT token
           const token = jwt.sign(
-            { Naam: result[0].Naam },
+            { Naam: result[0].Naam }, 
             process.env.TOKEN_SECRET
           );
-          return res.header("auth-token", token).status(200).send(token);
+          return res.header("authtoken", token).status(200).json({"token": token});
         } else return res.status(400).send("Not the same");
       }
     );
