@@ -16,7 +16,6 @@
                 required
               ></v-text-field>
 
-
               <v-text-field
                 label="Wachtwoord"
                 :type="'password'"
@@ -91,14 +90,13 @@ export default {
         .post(url, postData, axiosConfig)
         .then((res) => {
           if(res.data == "Not the same"){
-            this.validPassword = false;
             store.level = -1
           }
           store.token = res.data.token
-          //console.log(res.data)
+          console.log(res.data)
 
           jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function(err, decoded) {
-            if(decoded != undefined){ store.level = decoded.Level; this.validPassword = true;} // bar
+            if(decoded != undefined){ store.level = decoded.Level;} // bar
           });
           this.$router.push("/Dashboard")
         })
