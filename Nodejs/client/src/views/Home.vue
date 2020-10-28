@@ -6,7 +6,7 @@
           <v-card elevation="5" class="pa-8">
             <v-card-title>Login</v-card-title>
             <v-card-subtitle>Gelieve eerst in te loggen:</v-card-subtitle>
-            <v-form>
+            <v-form ref="form" @submit.prevent="login">
               <v-text-field
                 label="Email"
                 :type="'email'"
@@ -29,7 +29,7 @@
                 <v-row justify="space-around">
                   <v-btn
                     class="px-10 mt-2 primary"
-                    @click="login"
+                    type="submit"
                     depressed
                     rounded
                     >Login</v-btn
@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     login: function () {
-
       var postData = {
         Email: this.Email,
         Wachtwoord: this.Wachtwoord
@@ -105,6 +104,9 @@ export default {
         .catch((err) => {
           console.log(err)   
         });
+    },
+    onSubmit: function(){
+      console.log("test");
     },
   },
 };

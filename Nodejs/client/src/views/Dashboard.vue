@@ -1,25 +1,21 @@
 <template>
-  <div class="Dashboard">
-    <h1>This is the dashboard page</h1>
-    <v-btn class="px-10 mt-2 primary" @click="logout" depressed rounded>Logout</v-btn>
+  <div class="Dashboard" fill-height>
+    <Navbar/>
+    <p class="my-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti molestiae, unde illo qui recusandae fuga corrupti repellat animi exercitationem corporis, non neque velit consequatur voluptatem deserunt aliquid nemo modi molestias.</p>
   </div>
 </template>
 
 <script>
-import store from '../store';
+
+import Navbar from '@/components/Navbar.vue';
 
 export default {
+  components: { Navbar },
   data() {
     return {
       Email: "",
       Wachtwoord: "",
     };
-  },
-  methods: {
-    logout: function () {
-      store.token = null
-      this.$router.push("/")
-    },
   },
 };
 </script>

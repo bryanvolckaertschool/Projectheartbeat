@@ -55,6 +55,17 @@ router.delete("/delete", (req, res) => {
     });
 });
 
+router.get("/showall", verify, (req,res) =>{
+  
+  let sql = "SELECT * FROM users";
+
+  connection.query(sql, (err, result) => {
+    if (err) res.json(err);
+
+    res.json(result);
+  });
+})
+
 router.post("/show", verify, (req, res) => {
   let PersonID = connection.escape(req.body.PersonID);
 

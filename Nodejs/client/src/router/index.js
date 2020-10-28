@@ -22,6 +22,17 @@ const routes = [
     //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
     meta: {requireAuth : true,requiredlevel : 0}
+  },
+  {
+    path: '/Users',
+    name: 'Users',
+    //component: Dashboard
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Users.vue'),
+    meta: {requireAuth : true,requiredlevel : 1}
   }
 ]
 
