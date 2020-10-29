@@ -74,7 +74,7 @@
           "auth-token": store.token,
         },
       };
-      const url = `http://192.168.0.16:8000/users/showall`;
+      const url = `http://localhost:8000/users/showall`;
       axios
       .get(url, axiosConfig)
       .then((res) => {
