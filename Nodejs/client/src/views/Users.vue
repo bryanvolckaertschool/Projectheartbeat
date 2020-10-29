@@ -4,14 +4,34 @@
     <div class="pa-10">
       <v-expansion-panels>
         <v-expansion-panel v-for="user in Users" :key="user.Naam" class="my-0">
-          <v-expansion-panel-header> 
-              <Usercard :Naam="user.Naam" :cijfer="user.personid" :dementie="user.typeDementie"/>
+          <v-expansion-panel-header>
+            <Usercard
+              :Naam="user.Naam"
+              :cijfer="user.personid"
+              :dementie="user.typeDementie"
+            />
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            <v-container class="pa-0 ma-0">
+              <v-row wrap class="pa-0 ma-0">
+                <v-col md8 class="pa-0 ma-0 pl-5">
+                  <div>
+                    <div class="caption grey--text">Box-ID:</div>
+                    <div>{{ user.boxid }}</div>
+                  </div>
+
+                  <div>
+                    <div class="caption grey--text">Basis SPO2:</div>
+                    <div>{{ user.baseSPO2 }}</div>
+                  </div>
+
+                  <div>
+                    <div class="caption grey--text">Basis Hartslag:</div>
+                    <div>{{ user.baseHartslag }}</div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -22,11 +42,11 @@
 <script>
 const axios = require("axios");
 import Navbar from "@/components/Navbar.vue";
-import Usercard from "@/components/Usercard.vue"
+import Usercard from "@/components/Usercard.vue";
 import store from "../store";
 
 export default {
-  components: { Navbar, Usercard},
+  components: { Navbar, Usercard },
   data() {
     return {
       Users: {},
@@ -41,7 +61,7 @@ export default {
         "auth-token": store.token,
       },
     };
-    const url = `http://localhost:8000/users/showall`;
+    const url = `http://192.168.8.15:8000/users/showall`;
     axios
       .get(url, axiosConfig)
       .then((res) => {

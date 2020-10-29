@@ -1,8 +1,8 @@
 <template>
   <nav>
     <v-toolbar>
-      <v-app-bar-nav-icon @click="drawer = !drawer" large></v-app-bar-nav-icon>
-      <v-toolbar-title> vzw Heartbeats</v-toolbar-title>
+      <v-app-bar-nav-icon @click="drawer = !drawer" large class="ml-1"></v-app-bar-nav-icon>
+      <v-toolbar-title>Heartbeats vzw</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text class="px-5 primary" depressed rounded @click="logout">
         <span>Log uit</span>
