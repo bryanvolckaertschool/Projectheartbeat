@@ -14,21 +14,20 @@
           <div class="caption grey--text">Type dementie:</div>
           <div>{{ Dementie }}</div>
         </v-col>
-        <v-col md1 lg="1" class="pa-0 ma-0 mx-0 text-right">
-          <v-btn small fab dark color="orange lighten-1" class="mx-1">
-            <v-icon dark>edit</v-icon>
-          </v-btn>
-          <v-btn small fab dark color="red lighten-1" class="mx-1">
-            <v-icon dark>delete</v-icon>
-          </v-btn>
-        </v-col>
       </v-row>
     </v-container>
   </v-card>
 </template>
 
 <script>
-export default {
-  props: ["Naam", "cijfer", "Dementie"],
-};
+  export default {
+    props: ["Naam", "cijfer", "Dementie"],
+    methods: {},
+    printtest: function () {
+      console.log("ik ben edit knop");
+    },
+    printtest2: function () {
+      console.log("ik ben verwijder knop");
+    },
+  };
 </script>
