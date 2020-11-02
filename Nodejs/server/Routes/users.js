@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/create", verify , (req, res) => {
+
   let Naam = connection.escape(req.body.Naam);
   let SpeakerID = connection.escape(req.body.SpeakerID);
   let baseHartslag = connection.escape(req.body.baseHartslag);
@@ -17,7 +18,7 @@ router.post("/create", verify , (req, res) => {
   let typeDementie = connection.escape(req.body.typeDementie);
 
   let sql =
-    "INSERT INTO users (Naam, SpeakerID, baseHartslag, baseSPO2, typeDementie) VALUES (" +
+    "INSERT INTO users (Naam, boxid, baseHartslag, baseSPO2, typeDementie) VALUES (" +
     Naam +
     ", " +
     SpeakerID +
@@ -31,6 +32,7 @@ router.post("/create", verify , (req, res) => {
 
   connection.query(sql, (err, result) => {
     if (err) {
+      console.log(err)
       res.status(400).send(err);
       //niet nodig want res.json doet dit ook al
       //res.end();

@@ -23,11 +23,5 @@
   export default {
     props: ["Naam", "cijfer", "Dementie"],
     methods: {},
-    printtest: function () {
-      console.log("ik ben edit knop");
-    },
-    printtest2: function () {
-      console.log("ik ben verwijder knop");
-    },
   };
 </script>
