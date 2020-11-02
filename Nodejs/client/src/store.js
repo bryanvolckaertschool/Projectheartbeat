@@ -7,6 +7,7 @@ export default new Vuex.Store({
     token: null,
     level: null,
     error: null,
+    users: {},
 
     state: {
         totalTvCount: 10 // The TV inventory

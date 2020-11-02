@@ -10,7 +10,7 @@
       </v-container>
 
       <v-expansion-panels>
-        <v-expansion-panel v-for="user in Users" :key="user.Naam" class="my-0">
+        <v-expansion-panel v-for="user in storeUsers" :key="user.Naam" class="my-0">
           <v-expansion-panel-header>
             <Usercard
               :Naam="user.Naam"
@@ -94,7 +94,9 @@ export default {
       .get(url, axiosConfig)
       .then((res) => {
         this.Users = res.data;
-        console.log(this.Users);
+        store.users = res.data;
+        console.log(store.users);
+        //console.log(this.Users);
       })
       .catch((err) => {
         console.log(err);
