@@ -90,13 +90,13 @@ export default {
         .then((res) => {
           if(res.data == "Not the same"){
             console.log("level word -1")
-            store.level = -1
+            store.state.level = -1
           }
-          store.token = res.data.token
+          store.state.token = res.data.token
           console.log(res.data)
 
           jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function(err, decoded) {
-            if(decoded != undefined){ store.level = decoded.Level;} // bar
+            if(decoded != undefined){ store.state.level = decoded.Level;} // bar
           });
           this.$router.push("/Dashboard")
         })

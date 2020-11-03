@@ -58,7 +58,7 @@
             <v-col md3>
               <v-text-field
                 label="Basis hartslag"
-                v-model="BaseHartslag"
+                v-model="BasisHartslag"
                 prepend-icon="favorite"
                 required
               ></v-text-field>
@@ -67,7 +67,7 @@
             <v-col md3>
               <v-text-field
                 label="Basis SPO2"
-                v-model="BaseSPO2"
+                v-model="BasisSPO2"
                 prepend-icon="science"
                 required
               ></v-text-field>
@@ -113,22 +113,22 @@ export default {
       var postData = {
         Naam : this.Naam,
         SpeakerID : this.BoxID,
-        baseHartslag : this.BaseHartslag,
-        baseSPO2 : this.BaseSPO2,
+        baseHartslag : this.BasisHartslag,
+        baseSPO2 : this.BaiseSPO2,
         typeDementie : this.TypeDementie
       };
 
       let axiosConfig = {
         headers: {
-          "auth-token": store.token
+          "auth-token": store.state.token
         },
       };
       const url = `http://192.168.0.103:8000/users/create`;
       axios
         .post(url, postData , axiosConfig)
-        .then((res) => {
-          console.log(res)
-          console.log("Done i guess?")
+        .then((/* res */) => {
+          //Users terug callen om de data te updaten
+          store.dispatch("callUsersAPI");
         })
         .catch((err) => {
           console.log(err);

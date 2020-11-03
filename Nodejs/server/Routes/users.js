@@ -11,6 +11,8 @@ router.get("/", (req, res) => {
 
 router.post("/create", verify , (req, res) => {
 
+  console.log(req);
+
   let Naam = connection.escape(req.body.Naam);
   let SpeakerID = connection.escape(req.body.SpeakerID);
   let baseHartslag = connection.escape(req.body.baseHartslag);
@@ -58,6 +60,8 @@ router.delete("/delete", (req, res) => {
 });
 
 router.get("/showall", verify, (req,res) =>{
+
+  console.log("Get all gemaakt!")
   
   let sql = "SELECT * FROM users";
 

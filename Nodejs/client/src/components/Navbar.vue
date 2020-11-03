@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     logout: function () {
-      store.token = null
+      store.state.token = null
       this.$router.push("/")
     },
   },

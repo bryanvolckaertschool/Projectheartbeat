@@ -46,8 +46,8 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requireAuth){
     //Need to login
     //console.log(store.token + store.level + to.meta.requiredlevel)
-    if((store.level >= to.meta.requiredlevel)){
-      if(!store.token){
+    if((store.state.level >= to.meta.requiredlevel)){
+      if(!store.state.token){
         next({name:"Home"});
       }
       else{

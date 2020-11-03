@@ -10,7 +10,11 @@
       </v-container>
 
       <v-expansion-panels>
-        <v-expansion-panel v-for="user in storeUsers" :key="user.Naam" class="my-0">
+        <v-expansion-panel
+          v-for="user in testtest"
+          :key="user.Naam"
+          class="my-0"
+        >
           <v-expansion-panel-header>
             <Usercard
               :Naam="user.Naam"
@@ -47,13 +51,7 @@
                   >
                     <v-icon dark>edit</v-icon>
                   </v-btn>
-                  <v-btn
-                    small
-                    fab
-                    dark
-                    color="red lighten-1"
-                    class="mx-1 mt-2"
-                  >
+                  <v-btn small fab dark color="red lighten-1" class="mx-1 mt-2">
                     <v-icon dark>delete</v-icon>
                   </v-btn>
                 </v-col>
@@ -67,10 +65,12 @@
 </template>
 
 <script>
-const axios = require("axios");
+//const axios = require("axios");
+
 import Navbar from "@/components/Navbar.vue";
 import Usercard from "@/components/Usercard.vue";
 import AddUserPopup from "@/components/AddUserPopup.vue";
+
 import store from "../store";
 
 export default {
@@ -80,27 +80,17 @@ export default {
       Users: {},
     };
   },
+  computed: {
+    testtest() {
+      return store.getters.getStoreUsers;
+    },
+  },
   methods: {},
   created() {
     console.log("ik ben created");
 
-    let axiosConfig = {
-      headers: {
-        "auth-token": store.token,
-      },
-    };
-    const url = `http://localhost:8000/users/showall`;
-    axios
-      .get(url, axiosConfig)
-      .then((res) => {
-        this.Users = res.data;
-        store.users = res.data;
-        console.log(store.users);
-        //console.log(this.Users);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    store.dispatch("callUsersAPI");
+
   },
 };
 </script>
