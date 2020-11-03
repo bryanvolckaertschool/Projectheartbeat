@@ -1,9 +1,18 @@
 <template>
   <div class="Users" fill-height>
     <Navbar />
-    <div class="pa-10">
+    <div class="pa-10 pt-0">
       <v-container fluid class="pa-0 ma-0">
-        <v-row class="pa-0 ma-0">
+        <v-row align="center" class="pa-0 ma-0">
+          <v-btn align-self="end" small text @click="sortBy('Naam')">
+            <v-icon left small>person</v-icon>
+            <span class="caption text-lowercase">Sorteer via naam</span>
+          </v-btn>
+
+          <v-btn small text @click="sortBy('personid')">
+            <v-icon left small>folder</v-icon>
+            <span class="caption text-lowercase">Sorteer via ID</span>
+          </v-btn>
           <v-spacer></v-spacer>
           <AddUserPopup />
         </v-row>
@@ -51,7 +60,14 @@
                   >
                     <v-icon dark>edit</v-icon>
                   </v-btn>
-                  <v-btn small fab dark color="red lighten-1" class="mx-1 mt-2">
+                  <v-btn
+                    @click="deleteUser(user.personid)"
+                    small
+                    fab
+                    dark
+                    color="red lighten-1"
+                    class="mx-1 mt-2"
+                  >
                     <v-icon dark>delete</v-icon>
                   </v-btn>
                 </v-col>
@@ -65,7 +81,7 @@
 </template>
 
 <script>
-//const axios = require("axios");
+const axios = require("axios");
 
 import Navbar from "@/components/Navbar.vue";
 import Usercard from "@/components/Usercard.vue";
@@ -76,21 +92,45 @@ import store from "../store";
 export default {
   components: { Navbar, Usercard, AddUserPopup },
   data() {
-    return {
-      Users: {},
-    };
+    return {};
   },
   computed: {
     testtest() {
       return store.getters.getStoreUsers;
     },
   },
-  methods: {},
+  methods: {
+    deleteUser(id) {
+      var postData = {
+        PersonID: id,
+      };
+
+      console.log(postData);
+
+      let axiosConfig = {
+        headers: {
+          "auth-token": store.state.token,
+        },
+      };
+      const url = `http://192.168.0.103:8000/users/delete`;
+      axios
+        .post(url, postData, axiosConfig)
+        .then((/* res */) => {
+          //Users terug callen om de data te updaten
+          store.dispatch("callUsersAPI");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    sortBy(prop) {
+      store.commit("sortStoreUsers", prop);
+    },
+  },
   created() {
     console.log("ik ben created");
 
     store.dispatch("callUsersAPI");
-
   },
 };
 </script>

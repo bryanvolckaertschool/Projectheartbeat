@@ -8,7 +8,7 @@
         color="green lighten-1"
         v-bind="attrs"
         v-on="on"
-        class="mb-5 mr-5"
+        class="ma-5"
       >
         <v-icon dark>add</v-icon>
       </v-btn>
@@ -102,19 +102,12 @@ export default {
   },
   methods: {
     addUser: function () {
-      console.log(
-        this.Naam +
-          this.BoxID +
-          this.TypeDementie +
-          this.BasisHartslag +
-          this.BasisSPO2
-      );
 
       var postData = {
         Naam : this.Naam,
         SpeakerID : this.BoxID,
         baseHartslag : this.BasisHartslag,
-        baseSPO2 : this.BaiseSPO2,
+        baseSPO2 : this.BasisSPO2,
         typeDementie : this.TypeDementie
       };
 

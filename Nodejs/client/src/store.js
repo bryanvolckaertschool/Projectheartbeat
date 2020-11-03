@@ -20,8 +20,12 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    sortStoreUsers(state, prop){
+      state.users.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+    },
     setStoreUsers(state, items) {
       state.users = items;
+      console.log(state.users);
     },
   },
 
@@ -34,15 +38,11 @@ export default new Vuex.Store({
           "auth-token": state.token,
         },
       };
-      const url = `http://localhost:8000/users/showall`;
+      const url = `http://192.168.0.103:8000/users/showall`;
       axios
         .get(url, axiosConfig)
         .then((res) => {
-          /*this.Users = res.data;
-          store.state.users = res.data;
-          console.log(store.state.users);*/
           commit("setStoreUsers", res.data);
-          console.log("test123" + state.users);
         })
         .catch((err) => {
           console.log(err);

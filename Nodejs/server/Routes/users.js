@@ -9,9 +9,8 @@ router.get("/", (req, res) => {
   res.send("Hello from the Project Heartbeats API");
 });
 
-router.post("/create", verify , (req, res) => {
-
-  console.log(req);
+router.post("/create", verify, (req, res) => {
+  console.log("create request");
 
   let Naam = connection.escape(req.body.Naam);
   let SpeakerID = connection.escape(req.body.SpeakerID);
@@ -34,7 +33,7 @@ router.post("/create", verify , (req, res) => {
 
   connection.query(sql, (err, result) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       res.status(400).send(err);
       //niet nodig want res.json doet dit ook al
       //res.end();
@@ -43,26 +42,28 @@ router.post("/create", verify , (req, res) => {
   });
 });
 
-router.delete("/delete", (req, res) => {
-    let PersonID = connection.escape(req.body.PersonID);
+router.post("/delete", verify , (req, res) => {
+  console.log("Delete request gemaakt");
 
-    let sql =
-      "DELETE FROM users WHERE " + "personid =" + PersonID;
-  
-    connection.query(sql, (err, result) => {
-      if (err) {
-        res.status(400).send(err);
-        //niet nodig want res.json doet dit ook al
-        //res.end();
-      }
-      res.status(200).send(result);
-    });
+  let PersonID = connection.escape(req.body.PersonID);
+
+  let sql = "DELETE FROM users WHERE " + "personid = " + PersonID;
+
+  console.log(sql);
+
+  connection.query(sql, (err, result) => {
+    if (err) {
+      res.status(400).send(err);
+      //niet nodig want res.json doet dit ook al
+      //res.end();
+    }
+    res.status(200).send(result);
+  });
 });
 
-router.get("/showall", verify, (req,res) =>{
+router.get("/showall", verify, (req, res) => {
+  console.log("Get all gemaakt!");
 
-  console.log("Get all gemaakt!")
-  
   let sql = "SELECT * FROM users";
 
   connection.query(sql, (err, result) => {
@@ -70,7 +71,7 @@ router.get("/showall", verify, (req,res) =>{
 
     res.json(result);
   });
-})
+});
 
 router.post("/show", verify, (req, res) => {
   let PersonID = connection.escape(req.body.PersonID);
