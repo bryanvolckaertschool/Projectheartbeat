@@ -21,7 +21,7 @@
           <v-col md="12">
             <v-card fluid class="mx-2">
               <v-card-title>Welkom!</v-card-title>
-              <v-card-subtitle> Melvin volckaert</v-card-subtitle>
+              <v-card-subtitle>{{username}}</v-card-subtitle>
             </v-card>
           </v-col>
         </v-row>
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       drawer: false,
+      username: store.state.naam,
       links: [
         { icon: "dashboard", text: "Dashboard", route: "/Dashboard" },
         { icon: "people_alt", text: "Patiënten", route: "/Users" },

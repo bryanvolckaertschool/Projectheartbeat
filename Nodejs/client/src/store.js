@@ -10,6 +10,7 @@ export default new Vuex.Store({
     token: null,
     level: null,
     error: null,
+    naam: null,
     users: {},
   },
 

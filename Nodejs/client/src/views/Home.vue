@@ -51,15 +51,14 @@
   background-image: url(http://vzwheartbeats.be/wp-content/uploads/2018/11/heartbeats-dementie-ontroering-hoofdtelefoon-contact-8-1920x1280.jpg);
   background-size: cover;
 }
-
 </style>
 
 
 
 <script>
-const axios = require('axios');
+const axios = require("axios");
 const jwt = require("jsonwebtoken");
-import store from '../store';
+import store from "../store";
 
 export default {
   data() {
@@ -67,17 +66,16 @@ export default {
       Email: "",
       Wachtwoord: "",
       rules: {
-        passwordRules: v => !!v || "Wachtwoord is vereist",
-        emailRules: v => !!v || "Email is vereist",
-
-      }
+        passwordRules: (v) => !!v || "Wachtwoord is vereist",
+        emailRules: (v) => !!v || "Email is vereist",
+      },
     };
   },
   methods: {
     login: function () {
       var postData = {
         Email: this.Email,
-        Wachtwoord: this.Wachtwoord
+        Wachtwoord: this.Wachtwoord,
       };
       let axiosConfig = {
         headers: {
@@ -88,23 +86,29 @@ export default {
       axios
         .post(url, postData, axiosConfig)
         .then((res) => {
-          if(res.data == "Not the same"){
-            console.log("level word -1")
-            store.state.level = -1
+          if (res.data == "Not the same") {
+            console.log("level word -1");
+            store.state.level = -1;
           }
-          store.state.token = res.data.token
-          console.log(res.data)
+          store.state.token = res.data.token;
+          console.log(res.data);
 
-          jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function(err, decoded) {
-            if(decoded != undefined){ store.state.level = decoded.Level;} // bar
+          jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function (
+            err,
+            decoded
+          ) {
+            if (decoded != undefined) {
+              store.state.level = decoded.Level;
+              store.state.naam = decoded.Naam;
+            }
           });
-          this.$router.push("/Dashboard")
+          this.$router.push("/Dashboard");
         })
         .catch((err) => {
-          console.log(err)   
+          console.log(err);
         });
     },
-    onSubmit: function(){
+    onSubmit: function () {
       console.log("test");
     },
   },
