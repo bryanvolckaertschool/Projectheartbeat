@@ -42,7 +42,42 @@ router.post("/create", verify, (req, res) => {
   });
 });
 
-router.post("/delete", verify , (req, res) => {
+router.post("/update", verify, (req, res) => {
+  console.log("update request");
+
+  let Naam = connection.escape(req.body.Naam);
+  let SpeakerID = connection.escape(req.body.SpeakerID);
+  let baseHartslag = connection.escape(req.body.baseHartslag);
+  let baseSPO2 = connection.escape(req.body.baseSPO2);
+  let typeDementie = connection.escape(req.body.typeDementie);
+  let PersonID = connection.escape(req.body.PersonID);
+
+  let sql =
+    "UPDATE users SET Naam = " +
+    Naam +
+    ", boxid = " +
+    SpeakerID +
+    ", baseHartslag = " +
+    baseHartslag +
+    ", baseSPO2 = " +
+    baseSPO2 +
+    ", typeDementie = " +
+    typeDementie +
+    " WHERE users.personid = " +
+    PersonID;
+
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+      //niet nodig want res.json doet dit ook al
+      //res.end();
+    }
+    res.status(200).send(result);
+  });
+});
+
+router.post("/delete", verify, (req, res) => {
   console.log("Delete request gemaakt");
 
   let PersonID = connection.escape(req.body.PersonID);

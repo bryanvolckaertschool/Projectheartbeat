@@ -1,11 +1,13 @@
 <template>
   <div class="Dashboard" fill-height>
     <Navbar />
-    <p class="ma-5">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-      molestiae, unde illo qui recusandae fuga corrupti repellat animi
-      exercitationem corporis, non neque velit consequatur voluptatem deserunt
-      aliquid nemo modi molestias.
+    <p class="my-5 mx-15">
+      Heartbeats brengt mensen met dementie weer in contact met de favoriete
+      muziek ut hun jeugd. Zelfs al zijn hun geheugen & mogelijkheden sterk
+      afgenomen, de ontvankelijkheid voor muziek blijft. Muziek opent hun hart. <br><br>
+      Dankzij muziek is er weer contact met de partner, de familie en de
+      mantelzorger. Heartbeats boekt verrassende resultaten met mensen met wie
+      we het contacten denken te zijn verloren.
     </p>
   </div>
 </template>

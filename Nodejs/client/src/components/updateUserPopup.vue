@@ -5,21 +5,21 @@
         small
         fab
         dark
-        color="green lighten-1"
+        color="blue lighten-1"
+        class="mx-1 mt-2"
         v-bind="attrs"
         v-on="on"
-        class="ma-5"
       >
-        <v-icon dark>add</v-icon>
+        <v-icon dark>edit</v-icon>
       </v-btn>
     </template>
 
     <v-card elevation="5" class="pa-1">
-      <v-card-title>Patiënt toevoegen</v-card-title>
+      <v-card-title>Patiënt updaten</v-card-title>
       <v-card-subtitle class="pb-0"
-        >Vul onderstaande informatie in:</v-card-subtitle
+        >Bewerk onderstaande informatie:</v-card-subtitle
       >
-      <v-form class="mx-6" ref="form" @submit.prevent="addUser">
+      <v-form class="mx-6" ref="form" @submit.prevent="updateUser()">
         <v-container>
           <v-row>
             <v-col>
@@ -75,9 +75,13 @@
           </v-row>
 
           <v-row justify="space-around">
-            <v-btn class="green lighten-1 mb-2" @click="dialog = false" rounded type="submit"
-              ><span class="font-weight-bold">Toevoegen</span>
-              <v-icon right>add</v-icon>
+            <v-btn
+              class="blue lighten-1 mb-2"
+              @click="dialog = false"
+              rounded
+              type="submit"
+              ><span class="font-weight-bold">Update</span>
+              <v-icon right>update</v-icon>
             </v-btn>
           </v-row>
         </v-container>
@@ -87,8 +91,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-import store from '../store';
+const axios = require("axios");
+import store from "../store";
 
 export default {
   data() {
@@ -99,35 +103,48 @@ export default {
       TypeDementie: "",
       BasisHartslag: "",
       BasisSPO2: "",
+      PersonID: "",
     };
   },
+  props: ["User"],
   methods: {
-    addUser: function () {
-
+    updateUser() {
       var postData = {
-        Naam : this.Naam,
-        SpeakerID : this.BoxID,
-        baseHartslag : this.BasisHartslag,
-        baseSPO2 : this.BasisSPO2,
-        typeDementie : this.TypeDementie
+        Naam: this.Naam,
+        SpeakerID: this.BoxID,
+        baseHartslag: this.BasisHartslag,
+        baseSPO2: this.BasisSPO2,
+        typeDementie: this.TypeDementie,
+        PersonID: this.User.personid,
       };
 
-      let axiosConfig = {
-        headers: {
-          "auth-token": store.state.token
-        },
-      };
-      const url = `http://192.168.0.103:8000/users/create`;
-      axios
-        .post(url, postData , axiosConfig)
-        .then((/* res */) => {
-          //Users terug callen om de data te updaten
-          store.dispatch("callUsersAPI");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      console.log(postData);
+
+        let axiosConfig = {
+          headers: {
+            "auth-token": store.state.token,
+          },
+        };
+        const url = `http://192.168.0.103:8000/users/update`;
+        axios
+          .post(url, postData, axiosConfig)
+          .then((/* res */) => {
+            //Users terug callen om de data te updaten
+            store.dispatch("callUsersAPI");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     },
+  },
+  created() { 
+      console.log(this.User);
+    (this.Naam = this.User.Naam),
+      (this.BoxID = this.User.boxid),
+      (this.BasisHartslag = this.User.baseHartslag),
+      (this.BasisSPO2 = this.User.baseSPO2),
+      (this.TypeDementie = this.User.typeDementie),
+      (this.PersonID = this.User.personid);
   },
 };
 </script>

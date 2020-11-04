@@ -4,14 +4,14 @@
     <div class="pa-10 pt-0">
       <v-container fluid class="pa-0 ma-0">
         <v-row align="center" class="pa-0 ma-0">
-          <v-btn align-self="end" small text @click="sortBy('Naam')">
+          <v-btn class="mr-5" rounded depressed small @click="sortBy('Naam')">
             <v-icon left small>person</v-icon>
-            <span class="caption text-lowercase">Sorteer via naam</span>
+            <span class="primary--text text-subtitle-2 text-lowercase">Op naam</span>
           </v-btn>
 
-          <v-btn small text @click="sortBy('personid')">
-            <v-icon left small>folder</v-icon>
-            <span class="caption text-lowercase">Sorteer via ID</span>
+          <v-btn rounded depressed small @click="sortBy('personid')">
+            <v-icon left small>loyalty</v-icon>
+            <span class="primary--text text-subtitle-2 text-lowercase">op ID</span>
           </v-btn>
           <v-spacer></v-spacer>
           <AddUserPopup />
@@ -51,15 +51,8 @@
                   </div>
                 </v-col>
                 <v-col md1 lg="1" class="pa-0 ma-0 mx-0 text-right">
-                  <v-btn
-                    small
-                    fab
-                    dark
-                    color="orange lighten-1"
-                    class="mx-1 mt-2"
-                  >
-                    <v-icon dark>edit</v-icon>
-                  </v-btn>
+                  <!-- hier udpate compo -->
+                  <updateUserPopup :User="user" />
                   <v-btn
                     @click="deleteUser(user.personid)"
                     small
@@ -86,11 +79,12 @@ const axios = require("axios");
 import Navbar from "@/components/Navbar.vue";
 import Usercard from "@/components/Usercard.vue";
 import AddUserPopup from "@/components/AddUserPopup.vue";
+import updateUserPopup from "@/components/updateUserPopup.vue";
 
 import store from "../store";
 
 export default {
-  components: { Navbar, Usercard, AddUserPopup },
+  components: { Navbar, Usercard, AddUserPopup, updateUserPopup },
   data() {
     return {};
   },
@@ -123,6 +117,7 @@ export default {
           console.log(err);
         });
     },
+
     sortBy(prop) {
       store.commit("sortStoreUsers", prop);
     },
