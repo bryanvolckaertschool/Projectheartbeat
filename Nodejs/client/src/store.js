@@ -39,7 +39,7 @@ export default new Vuex.Store({
           "auth-token": state.token,
         },
       };
-      const url = `http://192.168.0.103:8000/users/showall`;
+      const url = `http://127.0.0.1:8000/users/showall`;
       axios
         .get(url, axiosConfig)
         .then((res) => {

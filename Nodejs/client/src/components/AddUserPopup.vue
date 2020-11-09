@@ -34,12 +34,16 @@
 
           <v-row>
             <v-col>
-              <v-text-field
-                label="Box-ID"
-                v-model="BoxID"
+                <v-autocomplete
+                @click = "retrieveIds"
+                ref="speaker"
                 prepend-icon="speaker"
+                v-model="BoxID"
+                :items="speakers"
+                label="Box-ID"
+                placeholder="Select..."
                 required
-              ></v-text-field>
+              ></v-autocomplete>
             </v-col>
           </v-row>
 
@@ -93,6 +97,7 @@ import store from '../store';
 export default {
   data() {
     return {
+      speakers: [],
       dialog: false,
       Naam: "",
       BoxID: "",
@@ -102,6 +107,16 @@ export default {
     };
   },
   methods: {
+    retrieveIds: function(){
+
+        const url = `http://${process.env.yasip}:3000/device/`; 
+        axios.get(url)
+        .then((response) =>{
+          console.log(response)
+        }) 
+        .catch((error) => console.log(error));
+
+    },
     addUser: function () {
 
       var postData = {
@@ -117,7 +132,7 @@ export default {
           "auth-token": store.state.token
         },
       };
-      const url = `http://192.168.0.103:8000/users/create`;
+      const url = `http://127.0.0.1:8000/users/create`;
       axios
         .post(url, postData , axiosConfig)
         .then((/* res */) => {

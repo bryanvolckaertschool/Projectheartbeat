@@ -82,7 +82,7 @@ export default {
           "Content-Type": "application/json;charset=UTF-8",
         },
       };
-      const url = `http://192.168.0.103:8000/auth/login`;
+      const url = `http://127.0.0.1:8000/auth/login`;
       axios
         .post(url, postData, axiosConfig)
         .then((res) => {
