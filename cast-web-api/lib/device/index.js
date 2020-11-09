@@ -5,7 +5,7 @@ const castManager = new CastManager();
 const logger = require('../log/logger');
 
 app.get('/device', function (req, res) {
-    res.header('Access-Control-Allow-Origin' => '*',)
+    res.header('Access-Control-Allow-Origin' : '*',)
     res.send( castManager.getDevices('all') );
 });
 
