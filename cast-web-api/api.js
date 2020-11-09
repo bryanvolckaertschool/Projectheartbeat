@@ -2,6 +2,7 @@ const Express = require('express');
 const bodyParser = require('body-parser');
 const configuration = require("./lib/config/config.js");
 const cors = require("cors");
+const app = express();
 
 app.use(cors());
 
