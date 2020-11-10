@@ -20,7 +20,7 @@
 
       <v-expansion-panels>
         <v-expansion-panel
-          v-for="user in testtest"
+          v-for="user in users"
           :key="user.Naam"
           class="my-0"
         >
@@ -89,7 +89,7 @@ export default {
     return {};
   },
   computed: {
-    testtest() {
+    users() {
       return store.getters.getStoreUsers;
     },
   },

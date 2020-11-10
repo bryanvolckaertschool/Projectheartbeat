@@ -34,16 +34,19 @@
 
           <v-row>
             <v-col>
-                <v-autocomplete
+              <v-select
                 @click = "retrieveIds"
+                @change="equalise"
                 ref="speaker"
                 prepend-icon="speaker"
                 v-model="BoxID"
                 :items="speakers"
+                item-text="text"
+                item-value="id"
                 label="Box-ID"
                 placeholder="Select..."
                 required
-              ></v-autocomplete>
+              ></v-select>
             </v-col>
           </v-row>
 
@@ -108,17 +111,29 @@ export default {
   },
   methods: {
     retrieveIds: function(){
-
+ 
         const url = `http://192.168.0.18:3000/device/`; 
         axios.get(url)
         .then((response) =>{
-          console.log(response)
+          let spekie = []
+          
+          console.log(response.data)
+          response.data.forEach(function(object){
+            spekie.push({text:object.name,id:object.id})
+            
+          });
+          console.log(spekie)
+          this.speakers = spekie
+          console.log(this.speakers)
         }) 
         .catch((error) => console.log(error));
 
     },
+    equalise:function(selected){
+      this.BoxID = selected
+    },
     addUser: function () {
-
+      console.log(this.BoxID)
       var postData = {
         Naam : this.Naam,
         SpeakerID : this.BoxID,

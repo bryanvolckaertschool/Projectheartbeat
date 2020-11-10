@@ -34,12 +34,19 @@
 
           <v-row>
             <v-col>
-              <v-text-field
-                label="Box-ID"
-                v-model="BoxID"
-                prepend-icon="speaker"
-                required
-              ></v-text-field>
+                <v-select
+                  @click = "retrieveIds"
+                  @change="equalise"
+                  ref="speaker"
+                  prepend-icon="speaker"
+                  v-model="BoxID"
+                  :items="speakers"
+                  item-text="text"
+                  item-value="id"
+                  label="Box-ID"
+                  placeholder="Select..."
+                  required
+              ></v-select>
             </v-col>
           </v-row>
 
@@ -97,6 +104,7 @@ import store from "../store";
 export default {
   data() {
     return {
+      speakers: [],
       dialog: false,
       Naam: "",
       BoxID: "",
@@ -108,6 +116,28 @@ export default {
   },
   props: ["User"],
   methods: {
+    retrieveIds: function(){
+ 
+        const url = `http://192.168.0.18:3000/device/`; 
+        axios.get(url)
+        .then((response) =>{
+          let spekie = []
+          
+          console.log(response.data)
+          response.data.forEach(function(object){
+            spekie.push({text:object.name,id:object.id})
+            
+          });
+          console.log(spekie)
+          this.speakers = spekie
+          console.log(this.speakers)
+        }) 
+        .catch((error) => console.log(error));
+
+    },
+    equalise:function(selected){
+      this.BoxID = selected
+    },
     updateUser() {
       var postData = {
         Naam: this.Naam,
