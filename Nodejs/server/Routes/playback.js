@@ -20,12 +20,35 @@ router.post("/start", verify, (req, res) => {
   let sql = "SELECT * FROM muziek WHERE personid = " + PersonID + "";
 
   connection.query(sql, async (err, result) => {
+    if (err) return res.status(200).send(err);
+
+    if (result != undefined) {
+      let songArray = [];
+      result.forEach(function (row) {
+        songArray.push(new music(row.songid, row.duratie, row.naam));
+      });
+      let boxId = await getboxid(PersonID);
+      playmusic(songArray, boxId);
+      console.log(songArray);
+      res.status(200).send(songArray);
+    }
+  });
+});
+
+router.post("/startsong", verify, (req, res) => {
+  console.log("gelukt!")
+  let PersonID = connection.escape(req.body.PersonID);
+  let SongID = connection.escape(req.body.SongID);
+
+  let sql = "SELECT * FROM muziek WHERE songid = " + SongID + "AND personid =" + PersonID;
+
+  connection.query(sql, async (err, result) => {
     if (err) return res.status(400).send(err);
 
     if (result != undefined) {
       let songArray = [];
       result.forEach(function (row) {
-        songArray.push(new music(row.songid, row.duratie));
+        songArray.push(new music(row.songid, row.duratie, row.naam));
       });
       let boxId = await getboxid(PersonID);
       playmusic(songArray, boxId);
@@ -42,12 +65,13 @@ router.post("/stop", verify, (req, res) => {
 });
 
 class music {
-  constructor(id = "empty", duration) {
+  constructor(id = "empty", duration, naam) {
     try {
       this.Id = id;
       let splitted = duration.split(":");
       let seconds = parseInt(splitted[1]) + parseInt(splitted[0]) * 60;
       this.duration = seconds;
+      this.naam = naam;
     } catch (error) {
       flog(`${error}`);
     }
@@ -127,7 +151,7 @@ function defaultmusic() {
     if (result != undefined) {
       let songArray = [];
       result.forEach(function (row) {
-        songArray.push(new music(row.songid, row.duratie));
+        songArray.push(new music(row.songid, row.duratie, row.naam));
       });
       let boxId = await getboxid(PersonID);
       playmusic(songArray, boxId);

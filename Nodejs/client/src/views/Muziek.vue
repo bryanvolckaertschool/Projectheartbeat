@@ -23,32 +23,32 @@
         :key="user.Naam"
         class="my-0 pa-2"
         >
-       
-          <v-row class="pa-0 ma-0">
-            <v-col cols="4">
-              <Usercard
-              :Naam="user.Naam"
-              :cijfer="user.personid"
-              :Dementie="user.typeDementie"
-              />
-            </v-col>
-            <v-col cols="7">
-              <div>
-                <div class="caption grey--text">Box-ID:</div>
-                <div>{{ user.boxid }}</div>
-              </div>
 
-            </v-col>
-            <v-col cols="1" class="pa-0">
-              <Musicplayback :User="user"/>
-              <Musiclist :User="user"/>
-            </v-col>
-          </v-row>
+        <v-row class="pa-0 ma-0">
+          <v-col cols="4">
+            <Usercard
+            :Naam="user.Naam"
+            :cijfer="user.personid"
+            :Dementie="user.typeDementie"
+            />
+          </v-col>
+          <v-col cols="7">
+            <div>
+              <div class="caption grey--text">Box-ID:</div>
+              <div>{{ user.boxid }}</div>
+            </div>
+
+          </v-col>
+          <v-col cols="1" class="pa-0">
+            <Musicplayback :User="user"/>
+            <Musiclist :User="user"/>
+        </v-col>
+      </v-row>
 
       
-      </v-card>
     </v-card>
-  </div>
+  </v-card>
+</div>
 </div>
 </template>
 
@@ -60,10 +60,11 @@ import Usercard from "@/components/Usercard.vue";
 import Musicplayback from "@/components/Musicplayback.vue";
 import Musiclist from "@/components/Musiclist.vue";
 
+
 import store from "../store";
 
 export default {
-  components: { Navbar, Usercard, Musicplayback, Musiclist },
+  components: { Navbar, Usercard, Musicplayback,Musiclist },
   data() {
     return {};
   },
@@ -75,7 +76,7 @@ export default {
   methods: {
     sortBy(prop) {
       store.commit("sortStoreUsers", prop);
-    },
+    }
   },
   created() {
     console.log("ik ben created");

@@ -57,6 +57,7 @@ router.post("/register", (req, res) => {
         connection.query(sql, (err, result) => {
           if (err) {
             res.status(400).send(err);
+            console.log(err.details[0].message);
           } else {
             res.status(200).send(value);
           }
@@ -65,6 +66,7 @@ router.post("/register", (req, res) => {
     })
     .catch((err) => {
       res.status(400).send(err.details[0].message);
+      console.log(err.details[0].message);
     });
 });
 

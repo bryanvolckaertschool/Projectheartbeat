@@ -19,14 +19,13 @@
       <v-card-subtitle class="pb-0"
         >Bewerk onderstaande informatie:</v-card-subtitle
       >
-      <v-form class="mx-6" ref="form" @submit.prevent="updateUser()">
+      <v-form class="mx-6" ref="form" @submit.prevent="updateSong()">
         <v-container>
           <v-row>
             <v-col>
               <v-text-field
-                label="Naam"
-                v-model="Naam"
-                prepend-icon="person"
+                label="Titel"
+                v-model="Titel"
                 required
               ></v-text-field>
             </v-col>
@@ -34,28 +33,10 @@
 
           <v-row>
             <v-col>
-              <v-select
-                @click = "retrieveIds"
-                @change="equalise"
-                ref="speaker"
-                prepend-icon="speaker"
-                v-model="BoxID"
-                :items="speakers"
-                item-text="text"
-                item-value="id"
-                label="Box-ID"
-                placeholder="Select..."
-                required
-              ></v-select>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
               <v-text-field
-                label="Type Dementie"
-                v-model="TypeDementie"
-                prepend-icon="accessibility_new"
+                label="SongID"
+                v-model="Songid"
+                
                 required
               ></v-text-field>
             </v-col>
@@ -64,21 +45,13 @@
           <v-row>
             <v-col md3>
               <v-text-field
-                label="Basis hartslag"
-                v-model="BasisHartslag"
-                prepend-icon="favorite"
+                label="Duratie"
+                v-model="Duratie"
+               
                 required
               ></v-text-field>
             </v-col>
 
-            <v-col md3>
-              <v-text-field
-                label="Basis SPO2"
-                v-model="BasisSPO2"
-                prepend-icon="science"
-                required
-              ></v-text-field>
-            </v-col>
           </v-row>
 
           <v-row justify="space-around">
@@ -106,15 +79,12 @@ export default {
     return {
       speakers: [],
       dialog: false,
-      Naam: "",
-      BoxID: "",
-      TypeDementie: "",
-      BasisHartslag: "",
-      BasisSPO2: "",
-      PersonID: "",
+      Titel: "",
+      Songid: "",
+      Duratie: ""
     };
   },
-  props: ["User"],
+  props: ["Song"],
   methods: {
     retrieveIds: function(){
  
@@ -138,14 +108,12 @@ export default {
     equalise:function(selected){
       this.BoxID = selected
     },
-    updateUser() {
+    updateSong() {
       var postData = {
-        Naam: this.Naam,
-        SpeakerID: this.BoxID,
-        baseHartslag: this.BasisHartslag,
-        baseSPO2: this.BasisSPO2,
-        typeDementie: this.TypeDementie,
-        PersonID: this.User.personid,
+        SongID: this.Songid,
+        PersonID: this.PersonID,
+        Naam: this.Titel,
+        Duratie: this.Duratie
       };
 
       console.log(postData);
@@ -155,7 +123,7 @@ export default {
             "auth-token": store.state.token,
           },
         };
-        const url = `http://127.0.0.1:8000/users/update`;
+        const url = `http://127.0.0.1:8000/muziek/update`;
         axios
           .post(url, postData, axiosConfig)
           .then((/* res */) => {
@@ -168,14 +136,13 @@ export default {
     },
   },
   created() { 
-      console.log(this.User);
-      (this.Naam = this.User.Naam),
-      (this.BoxID = this.User.boxid),
-      (this.BasisHartslag = this.User.baseHartslag),
-      (this.BasisSPO2 = this.User.baseSPO2),
-      (this.TypeDementie = this.User.typeDementie),
-      (this.PersonID = this.User.personid);
-  },
+      console.log(this.Song.naam);
+      (this.Titel = this.Song.naam),
+      (this.Songid = this.Song.songid),
+      (this.Duratie = this.Song.duratie),
+      (this.PersonID = this.Song.personid)
+
+    },
     computed: {
     users() {
       return store.getters.getStoreUsers;
