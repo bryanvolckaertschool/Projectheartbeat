@@ -115,15 +115,15 @@ export default {
         const url = `http://192.168.0.18:3000/device/`; 
         axios.get(url)
         .then((response) =>{
-          let spekie = []
+          let speaker = []
           
           console.log(response.data)
           response.data.forEach(function(object){
-            spekie.push({text:object.name,id:object.id})
+            speaker.push({text:object.name,id:object.id})
             
           });
-          console.log(spekie)
-          this.speakers = spekie
+          console.log(speaker)
+          this.speakers = speaker
           console.log(this.speakers)
         }) 
         .catch((error) => console.log(error));

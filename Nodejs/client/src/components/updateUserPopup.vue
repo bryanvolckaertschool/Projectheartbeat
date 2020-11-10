@@ -34,9 +34,7 @@
 
           <v-row>
             <v-col>
-                <v-select
-                  @click = "retrieveIds"
-                  @change="equalise"
+                <v-text-field
                   ref="speaker"
                   prepend-icon="speaker"
                   v-model="BoxID"
@@ -46,7 +44,7 @@
                   label="Box-ID"
                   placeholder="Select..."
                   required
-              ></v-select>
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -121,15 +119,15 @@ export default {
         const url = `http://192.168.0.18:3000/device/`; 
         axios.get(url)
         .then((response) =>{
-          let spekie = []
+          let speaker = []
           
           console.log(response.data)
           response.data.forEach(function(object){
-            spekie.push({text:object.name,id:object.id})
+            speaker.push({text:object.name,id:object.id})
             
           });
-          console.log(spekie)
-          this.speakers = spekie
+          console.log(speaker)
+          this.speakers = speaker
           console.log(this.speakers)
         }) 
         .catch((error) => console.log(error));
@@ -169,12 +167,17 @@ export default {
   },
   created() { 
       console.log(this.User);
-    (this.Naam = this.User.Naam),
+      (this.Naam = this.User.Naam),
       (this.BoxID = this.User.boxid),
       (this.BasisHartslag = this.User.baseHartslag),
       (this.BasisSPO2 = this.User.baseSPO2),
       (this.TypeDementie = this.User.typeDementie),
       (this.PersonID = this.User.personid);
+  },
+    computed: {
+    users() {
+      return store.getters.getStoreUsers;
+    },
   },
 };
 </script>

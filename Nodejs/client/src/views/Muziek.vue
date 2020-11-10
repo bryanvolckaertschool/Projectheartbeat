@@ -1,7 +1,7 @@
 <template>
   <div class="Users" fill-height>
     <Navbar />
-    <div class="pa-10 pt-0">
+    <div class="pa-10 pt-0 my-5">
       <v-container fluid class="pa-0 ma-0">
         <v-row align="center" class="pa-0 ma-0">
           <v-btn class="mr-5" rounded depressed small @click="sortBy('Naam')">
@@ -17,47 +17,53 @@
         </v-row>
       </v-container>
 
-      <v-expansion-panels>
-        <v-expansion-panel
-          v-for="user in users"
-          :key="user.Naam"
-          class="my-0"
+      <v-card class="ma-5">
+        <v-card
+        v-for="user in users"
+        :key="user.Naam"
+        class="my-0 pa-2"
         >
-          <v-expansion-panel-header>
-            <v-row>
-              <v-col cols="11">
-                <Usercard
-                  :Naam="user.Naam"
-                  :cijfer="user.personid"
-                  :Dementie="user.typeDementie"
-                />
-              </v-col>
-              <v-col>
-                <Musicplayback />
-              </v-col>
-            </v-row>
-         
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
+       
+          <v-row class="pa-0 ma-0">
+            <v-col cols="4">
+              <Usercard
+              :Naam="user.Naam"
+              :cijfer="user.personid"
+              :Dementie="user.typeDementie"
+              />
+            </v-col>
+            <v-col cols="7">
+              <div>
+                <div class="caption grey--text">Box-ID:</div>
+                <div>{{ user.boxid }}</div>
+              </div>
+
+            </v-col>
+            <v-col cols="1" class="pa-0">
+              <Musicplayback :User="user"/>
+              <Musiclist :User="user"/>
+            </v-col>
+          </v-row>
+
+      
+      </v-card>
+    </v-card>
   </div>
+</div>
 </template>
 
 <script>
-const axios = require("axios");
+//const axios = require("axios");
 
 import Navbar from "@/components/Navbar.vue";
 import Usercard from "@/components/Usercard.vue";
 import Musicplayback from "@/components/Musicplayback.vue";
+import Musiclist from "@/components/Musiclist.vue";
 
 import store from "../store";
 
 export default {
-  components: { Navbar, Usercard, Musicplayback },
+  components: { Navbar, Usercard, Musicplayback, Musiclist },
   data() {
     return {};
   },
@@ -67,30 +73,6 @@ export default {
     },
   },
   methods: {
-    deleteUser(id) {
-      var postData = {
-        PersonID: id,
-      };
-
-      console.log(postData);
-
-      let axiosConfig = {
-        headers: {
-          "auth-token": store.state.token,
-        },
-      };
-      const url = `http://127.0.0.1:8000/users/delete`;
-      axios
-        .post(url, postData, axiosConfig)
-        .then((/* res */) => {
-          //Users terug callen om de data te updaten
-          store.dispatch("callUsersAPI");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
     sortBy(prop) {
       store.commit("sortStoreUsers", prop);
     },

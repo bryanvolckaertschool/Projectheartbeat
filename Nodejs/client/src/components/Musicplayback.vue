@@ -2,40 +2,74 @@
   <v-dialog v-model="dialog" max-width="80%">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        small
-        fab
-        dark
-        color="green darken-1"
-        class="mx-1 mt-2"
-        v-bind="attrs"
-        v-on="on"
+      small
+      fab
+      dark
+      color="green darken-1"
+      class="mx-1 mt-2"
+      v-bind="attrs"
+      v-on="on"
       >
-        <v-icon dark>music_note</v-icon>
-      </v-btn>
-    </template>
+      <v-icon dark>play_circle_filled</v-icon>
+    </v-btn>
+  </template>
 
-    <v-card elevation="5" class="pa-1">
-      <v-card-title>Music playback</v-card-title>
-      <v-card-subtitle class="pb-0"
-        >Bewerk onderstaande informatie:</v-card-subtitle
-      >
-      <v-form class="mx-6" ref="form" @submit.prevent="updateUser()">
-        <v-container>
-          <v-row>
-            <v-col>
-              <v-text-field
-                label="Naam"
-                v-model="Naam"
-                prepend-icon="person"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
+  <v-card elevation="5" class="pa-1">
+    <v-card-title>Music playback</v-card-title>
+    <v-card-subtitle class="pb-0"
+    >Bewerk onderstaande informatie:</v-card-subtitle
+    >
+    <v-form class="mx-6" ref="form" @submit.prevent="updateUser()">
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-card>
+              <v-card-title>Currently playing</v-card-title>
+              <div class="pa-5">
+                <div class=" grey--text">Titel:</div>
+                <div>{{ titel }}</div>
+              </div>
+              <div class="pa-5">
+                <div class=" grey--text">Status:</div>
+                <div>{{ status }}</div>
+              </div>
+              <div class="pa-5">
+                <div class=" grey--text">Volume:</div>
+                <div>{{ volume }}</div>  
+              </div>
+              <v-spacer></v-spacer>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="5"></v-col>
+          <v-col cols="2" align="center">
+            <v-btn
+              small
+              fab
+              dark
+              color="green "
+              class="mx-1 mt-2"
+            >
+            <v-icon dark>play_circle_filled</v-icon>
+          </v-btn>
+          <v-btn
+            small
+            fab
+            dark
+            color="primary"
+            class="mx-1 mt-2"
+          >
+          <v-icon dark>pause_circle_filled</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="5"></v-col>
+    </v-row>
 
-        </v-container>
-      </v-form>
-    </v-card>
-  </v-dialog>
+  </v-container>
+</v-form>
+</v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -50,70 +84,36 @@ export default {
       Naam: "",
       BoxID: "",
       TypeDementie: "",
-      BasisHartslag: "",
-      BasisSPO2: "",
       PersonID: "",
+      titel: "Error in fetching playback status. Try again later...",
+      status: "",
+      volume: "",
     };
   },
   props: ["User"],
   methods: {
-    retrieveIds: function(){
- 
-        const url = `http://192.168.0.18:3000/device/`; 
-        axios.get(url)
-        .then((response) =>{
-          let spekie = []
-          
-          console.log(response.data)
-          response.data.forEach(function(object){
-            spekie.push({text:object.name,id:object.id})
-            
-          });
-          console.log(spekie)
-          this.speakers = spekie
-          console.log(this.speakers)
-        }) 
-        .catch((error) => console.log(error));
 
-    },
-    equalise:function(selected){
-      this.BoxID = selected
-    },
-    updateUser() {
-      var postData = {
-        Naam: this.Naam,
-        SpeakerID: this.BoxID,
-        baseHartslag: this.BasisHartslag,
-        baseSPO2: this.BasisSPO2,
-        typeDementie: this.TypeDementie,
-        PersonID: this.User.personid,
-      };
-
-
-        let axiosConfig = {
-          headers: {
-            "auth-token": store.state.token,
-          },
-        };
-        const url = `http://127.0.0.1:8000/users/update`;
-        axios
-          .post(url, postData, axiosConfig)
-          .then((/* res */) => {
-            //Users terug callen om de data te updaten
-            store.dispatch("callUsersAPI");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    },
   },
   created() { 
-    (this.Naam = this.User.Naam),
-      (this.BoxID = this.User.boxid),
-      (this.BasisHartslag = this.User.baseHartslag),
-      (this.BasisSPO2 = this.User.baseSPO2),
-      (this.TypeDementie = this.User.typeDementie),
-      (this.PersonID = this.User.personid);
+       console.log(this.User.Naam),
+      (this.BoxID = this.User.boxid)
+      const url = `http://192.168.0.18:3000/device/${this.BoxID}`; 
+      console.log(url)
+      axios.get(url)
+      .then((response) =>{
+        console.log(response.data);
+        this.titel = response.data.status;
+        this.status = response.data.status;
+        this.volume = response.data.volume;
+      })
+      .catch((error) => console.log(error));
+     
   },
+  computed: {
+    users() {
+      return store.getters.getStoreUsers;
+    },
+  },
+
 };
 </script>
