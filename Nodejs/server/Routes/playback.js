@@ -92,7 +92,7 @@ async function playmusic(songArray, boxId) {
           [
             {
               mediaType: "MP3",
-              mediaUrl: `http://${process.env.yasip}:256/${songArray[i].Id}.mp3`,
+              mediaUrl: `http://${process.env.yasip}:256/${songArray[i].Id}`,
             },
           ],
           {

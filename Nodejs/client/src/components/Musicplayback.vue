@@ -201,6 +201,7 @@ export default {
       .catch((error) => console.log(error));
     },
     Play: function(){
+      console.log("Songid wich is selected:"+ this.Songid)
       if(this.Songid == "Nothing"){
         const url = `http://192.168.0.16:3000/device/${this.BoxID}/play`; 
         console.log(url)
@@ -216,7 +217,7 @@ export default {
           var postData = {
             PersonID: this.PersonID,
           };
-
+          
           console.log(postData);
 
           let axiosConfig = {
