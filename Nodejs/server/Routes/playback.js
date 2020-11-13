@@ -52,6 +52,7 @@ router.post("/startsong", verify, (req, res) => {
       });
       let boxId = await getboxid(PersonID);
       playmusic(songArray, boxId);
+      console.log(songArray)
       res.status(200).send(songArray);
     }
   });

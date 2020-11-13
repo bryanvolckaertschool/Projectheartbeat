@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/meting", verify, (req, res) => {
-
+  console.log(connection.escape(req.body))
   let PersonID = connection.escape(req.body.PersonID);
   let curHartslag = connection.escape(req.body.curHartslag);
   let curSPO2 = connection.escape(req.body.curSPO2);

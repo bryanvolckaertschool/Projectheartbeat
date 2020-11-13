@@ -30,7 +30,7 @@
                 <v-row>
                   <v-col cols="2">
                     <v-avatar class="ml-5" tile size="140">
-                      <img :src=image  />
+                      <img :src=image />
                     </v-avatar>
                   </v-col>
                   <v-col cols="8">
@@ -121,6 +121,7 @@
 <script>
 const axios = require("axios");
 import store from "../store";
+import defaultfoto from "../assets/default.png"
 
 export default {
   data() {
@@ -135,7 +136,7 @@ export default {
       status: "",
       volume: "",
       artist: "",
-      image: "/img/default.9e0968a0.png",
+      image: defaultfoto,
     };
   },
   props: ["User"],
@@ -165,7 +166,7 @@ export default {
       this.Songid = selected
     },
     getboxinfo: function(){
-      const url = `http://192.168.0.16:3000/device/${this.BoxID}`; 
+      const url = `http://192.168.0.18:3000/device/${this.BoxID}`; 
       axios.get(url)
       .then((response) =>{
         if(response.data.connection == "connected" ){
@@ -192,7 +193,7 @@ export default {
       .catch((error) => console.log(error));
     },
     Pause: function(){
-      const url = `http://192.168.0.16:3000/device/${this.BoxID}/pause`; 
+      const url = `http://192.168.0.18:3000/device/${this.BoxID}/pause`; 
       console.log(url)
       axios.get(url)
       .then((response) =>{
@@ -203,7 +204,7 @@ export default {
     Play: function(){
       console.log("Songid wich is selected:"+ this.Songid)
       if(this.Songid == "Nothing"){
-        const url = `http://192.168.0.16:3000/device/${this.BoxID}/play`; 
+        const url = `http://192.168.0.18:3000/device/${this.BoxID}/play`; 
         console.log(url)
         axios.get(url)
         .then((response) =>{
@@ -230,7 +231,7 @@ export default {
           .post(url, postData, axiosConfig)
           .then(() => {
             this.titel = "Playlist van pmd"
-            this.image ="/img/default.9e0968a0.png"
+            this.image = defaultfoto
         })
           .catch((err) => {
             console.log(err);
@@ -256,7 +257,8 @@ export default {
         axios
         .post(url, postData, axiosConfig)
         .then((response) => {
-          console.log(response);
+          this.titel = response.data[0].naam
+          this.image = defaultfoto
         })
         .catch((err) => {
           console.log(err);
