@@ -11,6 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/meting", verify, (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
   console.log(connection.escape(req.body))
   let PersonID = connection.escape(req.body.PersonID);
   let curHartslag = connection.escape(req.body.curHartslag);
