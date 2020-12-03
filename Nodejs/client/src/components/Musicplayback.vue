@@ -169,10 +169,18 @@ export default {
       const url = `http://192.168.0.18:3000/device/${this.BoxID}`; 
       axios.get(url)
       .then((response) =>{
+        console.log(response.data.status)
         if(response.data.connection == "connected" ){
-          if(response.data.status.title == ""){
-           this.titel = "Nothing playing";
-           this.status = "stopped"
+          if(response.data.status.title == undefined && response.data.status.status != "IDLE"){
+           this.titel = "Project heartbeat muziek";
+           this.status = "Playing"
+          }
+          else if(response.data.status.status == "IDLE"){
+            this.titel = "Nothing playing";
+            this.status = "Idling"
+          }
+          else if(response.data.title == "" ){
+            console.log("empty title")
           }
         else{
           this.titel = response.data.status.title;

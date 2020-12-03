@@ -15,7 +15,7 @@
     </template>
 
     <v-card elevation="5" class="pa-1">
-      <v-card-title>Patiënt updaten</v-card-title>
+      <v-card-title>Song updaten</v-card-title>
       <v-card-subtitle class="pb-0"
         >Bewerk onderstaande informatie:</v-card-subtitle
       >
