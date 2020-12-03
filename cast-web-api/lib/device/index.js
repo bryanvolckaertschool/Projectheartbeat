@@ -5,6 +5,7 @@ const castManager = new CastManager();
 const logger = require('../log/logger');
 
 app.get('/device', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.send( castManager.getDevices('all') );
 });
 
@@ -29,6 +30,7 @@ app.get('/device/debug/group', function (req, res) {
 });
 
 app.all('/device/:id*', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*')
     castManager.getDeviceConnected(req.params.id) //TODO: if not connected, then connecting returns error: {}
         .then(device => {
             res.locals.device = device;
