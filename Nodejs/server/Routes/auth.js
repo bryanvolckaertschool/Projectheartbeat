@@ -72,54 +72,74 @@ router.post("/register", (req, res) => {
 
 router.post("/login", async (req, res) => {
   const validationObject = await schemaLogin.validate(req.body);
-  console.log(req.body)
-  console.log(validationObject)
-  if (validationObject.error)
+
+  console.log(req.body);
+
+  if (validationObject.error) {
+    console.log(validationObject.error.details[0].message);
     return res.status(400).send(validationObject.error.details[0].message);
-  
+  }
+
   let Email = connection.escape(req.body.Email);
   let Wachtwoord = connection.escape(req.body.Wachtwoord);
 
   let sql =
     "SELECT Naam, Email, Wachtwoord, level FROM admins WHERE Email =" + Email;
-  
-  const login = connection.query(sql, (err, result) => {
-    if (err) return res.status(400).send(err);
-    if (Object.keys(result).length === 0)
-      return res.status(400).send("Verkeerde Email");
 
+  console.log(sql);
+
+  const login = connection.query(sql, (err, result) => {
+    console.log(result);
+    if (err) {
+      console.log("Een error: 1");
+      return res.status(400).send(err);
+    }
+
+    if (Object.keys(result).length === 0) {
+      console.log("Een error: 2");
+      return res.status(400).send("Verkeerde Email");
+    }
     const verglijk = bcrypt.compare(
       Wachtwoord,
       result[0].Wachtwoord,
       (err, same) => {
-        if (err) return res.status(400).send(err);
+        if (err) {
+          console.log("Een error: 3");
+          return res.status(400).send(err);
+        }
         if (same) {
           //Creëer een geef een JWT token
+          console.log("Correct!");
           const token = jwt.sign(
-            { Naam: result[0].Naam, Level: result[0].level }, 
+            { Naam: result[0].Naam, Level: result[0].level },
             process.env.TOKEN_SECRET
           );
-          return res.header("authtoken", token).status(200).json({"token": token});
-        } else return res.json("Not the same");
+          return res
+            .header("authtoken", token)
+            .status(200)
+            .json({ token: token });
+        } else {
+          console.log("Een error: 4");
+          return res.json("Not the same");
+        }
       }
     );
   });
 });
 
 router.delete("/delete", (req, res) => {
-    let ID = connection.escape(req.body.ID);
+  let ID = connection.escape(req.body.ID);
 
-    let sql =
-      "DELETE FROM admins WHERE " + "ID =" + ID;
-  
-    connection.query(sql, (err, result) => {
-      if (err) {
-        res.status(400).send(err);
-        //niet nodig want res.json doet dit ook al
-        //res.end();
-      }
-      res.status(200).send(result);
-    });
+  let sql = "DELETE FROM admins WHERE " + "ID =" + ID;
+
+  connection.query(sql, (err, result) => {
+    if (err) {
+      res.status(400).send(err);
+      //niet nodig want res.json doet dit ook al
+      //res.end();
+    }
+    res.status(200).send(result);
+  });
 });
 
 router.post("/show", verify, (req, res) => {
