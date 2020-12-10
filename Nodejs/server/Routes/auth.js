@@ -8,6 +8,7 @@ const verify = require("./verifyToken");
 //Validatie
 const joi = require("@hapi/joi");
 
+
 //Environment variabelen
 dotenv.config({ path: __dirname + "/../.env" });
 
@@ -89,6 +90,9 @@ router.post("/login", async (req, res) => {
   console.log(sql);
 
   const login = connection.query(sql, (err, result) => {
+    console.log("Error:");
+    console.log(err);
+    console.log("Result:");
     console.log(result);
     if (err) {
       console.log("Een error: 1");
