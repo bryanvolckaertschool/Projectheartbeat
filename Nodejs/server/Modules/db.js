@@ -9,9 +9,9 @@ const mysql = require("mysql");
 //   });
 
 const connection = mysql.createConnection({
-  host: "94.110.140.22",
-  user: "projectHeartBeatAPI",
-  password: "BryVin2020",
+  host: "94.110.139.152",
+  user: "Projectheartbeatsql",
+  password: "MelvisPelvis",
   database: "ProjectheartbeatTemp",
 });
 
