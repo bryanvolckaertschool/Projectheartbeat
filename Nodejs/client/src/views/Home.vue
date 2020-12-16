@@ -15,7 +15,6 @@
                 prepend-icon="mail"
                 required
               ></v-text-field>
-
               <v-text-field
                 label="Wachtwoord"
                 :type="'password'"

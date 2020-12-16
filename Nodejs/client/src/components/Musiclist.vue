@@ -17,17 +17,16 @@
 
 
 	<v-card elevation="5" class="pa-1">
-		<v-card-title>{{Naam}}<addsong :User="User" /> <v-btn small fab dark color="blue" @click="getsongs">
-        <v-icon dark>refresh</v-icon>
-      </v-btn></v-card-title>
-
+		<v-card-title>{{Naam}}
+</v-card-title>
+			<v-container fluid class="pa-0 ma-0">
 		<v-card
 		v-for="song in songs"
 		:key="song.title"
-		class="my-0"
+		class="mx-8"
 		>
 
-			<v-container fluid class="pa-0 ma-0">
+
 				<v-row class="pa-2 ma-0">
 					<v-col md11 class="pa-0 ma-0 pl-5">
 						<div>
@@ -63,10 +62,16 @@
                   </v-btn>
                 </v-col>
 				</v-row>
-			</v-container>
 
 	</v-card>
+<v-row justify="space-around">
+			<addsong :User="User"/>
+	<v-btn small fab dark color="blue" @click="getsongs">
+        <v-icon dark>refresh</v-icon>
+    </v-btn>
+</v-row>
 
+			</v-container>
 </v-card>
 
 </v-dialog>

@@ -14,13 +14,14 @@ const connection = mysql.createConnection({
   password: "BryVin2020",
   database: "ProjectheartbeatTemp",
 });
-  
-  //effectief connecteren
-  connection.connect((err) => {
-    if (err) {
-      throw err;
-    }
-    console.log("Connectie met Database Succesvol!");
-  });
 
-  module.exports = connection
+//effectief connecteren
+connection.connect((err) => {
+  if (err) {
+    throw err;
+  }
+  console.log("Connectie met Database Succesvol!");
+});
+
+
+module.exports = connection;
