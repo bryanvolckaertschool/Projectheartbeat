@@ -72,6 +72,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  try{
   const validationObject = await schemaLogin.validate(req.body);
 
   console.log(req.body);
@@ -129,6 +130,8 @@ router.post("/login", async (req, res) => {
       }
     );
   });
+}
+catch(err){console.log("Das den boosdoener"+err)}
 });
 
 router.delete("/delete", (req, res) => {
