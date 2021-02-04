@@ -8,25 +8,27 @@ const mysql = require("mysql");
 //     database: "Heartbeats",
 //   });
 
+// const connection = mysql.createConnection({
+//   host: "94.110.139.152",
+//   user: process.env.DB_USR,
+//   password: process.env.DB_PWD,
+//   database: "Projectheartbeat",
+// });
+
 const connection = mysql.createConnection({
   host: "94.110.139.152",
-<<<<<<< HEAD
-  user: "ProjectHeartbeatAPI",
-  password: "123",
-=======
-  user: "Projectheartbeatsql",
-  password: "MelvisPelvis",
->>>>>>> 24d3a61e0d41b55ea078d4a62b262751f0774330
-  database: "ProjectheartbeatTemp",
+  user: "PHDBserver",
+  password: "Melvispelvis",
+  database: "Projectheartbeat",
 });
 
 //effectief connecteren
 connection.connect((err) => {
   if (err) {
+    console.log(err)
     throw err;
   }
   console.log("Connectie met Database Succesvol!");
 });
-
 
 module.exports = connection;
