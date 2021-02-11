@@ -118,7 +118,7 @@ export default {
   methods: {
     retrieveIds: function(){
  
-        const url = `http://192.168.0.18:3000/device/`; 
+        const url = `http://127.0.0.1:3000/device/`; 
         axios.get(url)
         .then((response) =>{
           let speaker = []

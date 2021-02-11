@@ -166,7 +166,7 @@ export default {
       this.Songid = selected
     },
     getboxinfo: function(){
-      const url = `http://192.168.0.18:3000/device/${this.BoxID}`; 
+      const url = `http://127.0.0.1:3000/device/${this.BoxID}`; 
       axios.get(url)
       .then((response) =>{
         console.log(response.data.status)
@@ -201,7 +201,7 @@ export default {
       .catch((error) => console.log(error));
     },
     Pause: function(){
-      const url = `http://192.168.0.18:3000/device/${this.BoxID}/pause`; 
+      const url = `http://127.0.0.1:3000/device/${this.BoxID}/pause`; 
       console.log(url)
       axios.get(url)
       .then((response) =>{
@@ -212,7 +212,7 @@ export default {
     Play: function(){
       console.log("Songid wich is selected:"+ this.Songid)
       if(this.Songid == "Nothing"){
-        const url = `http://192.168.0.18:3000/device/${this.BoxID}/play`; 
+        const url = `http://127.0.0.1:3000/device/${this.BoxID}/play`; 
         console.log(url)
         axios.get(url)
         .then((response) =>{

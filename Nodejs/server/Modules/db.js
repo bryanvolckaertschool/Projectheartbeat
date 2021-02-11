@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 
 //Creëer db connectie
 // const connection = mysql.createConnection({
@@ -22,13 +22,22 @@ const connection = mysql.createConnection({
   database: "Projectheartbeat",
 });
 
-//effectief connecteren
-connection.connect((err) => {
-  if (err) {
-    console.log(err)
-    throw err;
-  }
-  console.log("Connectie met Database Succesvol!");
+connection.on('error', (err) => {
+    if(err){ console.log(err);mysql.createConnection({
+  host: "94.110.139.152",
+  user: "PHDBserver",
+  password: "Melvispelvis",
+  database: "Projectheartbeat",
+});}
 });
+
+// //effectief connecteren
+// connection.connect((err) => {
+//   if (err) {
+//     console.log(err)
+//     throw err;
+//   }
+//   console.log("Connectie met Database Succesvol!");
+// });
 
 module.exports = connection;

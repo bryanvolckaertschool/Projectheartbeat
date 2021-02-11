@@ -19,7 +19,7 @@
       <v-card-subtitle class="pb-0"
         >Vul onderstaande informatie in:</v-card-subtitle
       >
-      <v-form class="mx-6" ref="form" @submit.prevent="addUser">
+      <v-form class="mx-6" ref="form" @submit.prevent="addUser()">
         <v-container>
           <v-row>
             <v-col>
@@ -112,7 +112,7 @@ export default {
   methods: {
     retrieveIds: function(){
  
-        const url = `http://192.168.0.16:3000/device/`; 
+        const url = `http://127.0.0.1:3000/device/`; 
         axios.get(url)
         .then((response) =>{
           let speaker = []
@@ -132,7 +132,7 @@ export default {
     equalise:function(selected){
       this.BoxID = selected
     },
-    addUser: function () {
+    addUser() {
       console.log(this.BoxID)
       var postData = {
         Naam : this.Naam,
