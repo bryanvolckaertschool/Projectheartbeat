@@ -118,7 +118,7 @@ export default {
   methods: {
     retrieveIds: function(){
  
-        const url = `http://192.168.0.18:3000/device/`; 
+        const url = `http://${process.env.VUE_APP_CAST_IP}:${process.env.VUE_APP_CAST_PORT}/device/`; 
         axios.get(url)
         .then((response) =>{
           let speaker = []
@@ -155,7 +155,7 @@ export default {
             "auth-token": store.state.token,
           },
         };
-        const url = `http://127.0.0.1:8000/users/update`;
+        const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/users/update`;
         axios
           .post(url, postData, axiosConfig)
           .then((/* res */) => {

@@ -150,7 +150,7 @@ export default {
           "auth-token": store.state.token,
         },
       };
-      const url = `http://127.0.0.1:8000/muziek/show`;
+      const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/muziek/show`;
       axios
       .post(url, postData, axiosConfig)
       .then((res) => {
@@ -166,7 +166,7 @@ export default {
       this.Songid = selected
     },
     getboxinfo: function(){
-      const url = `http://192.168.0.18:3000/device/${this.BoxID}`; 
+      const url = `http://${process.env.VUE_APP_CAST_IP}:${process.env.VUE_APP_CAST_PORT}/device/${this.BoxID}`; 
       axios.get(url)
       .then((response) =>{
         console.log(response.data.status)
@@ -201,7 +201,7 @@ export default {
       .catch((error) => console.log(error));
     },
     Pause: function(){
-      const url = `http://192.168.0.18:3000/device/${this.BoxID}/pause`; 
+      const url = `http://${process.env.VUE_APP_CAST_IP}:${process.env.VUE_APP_CAST_PORT}/device/${this.BoxID}/pause`; 
       console.log(url)
       axios.get(url)
       .then((response) =>{
@@ -212,7 +212,7 @@ export default {
     Play: function(){
       console.log("Songid wich is selected:"+ this.Songid)
       if(this.Songid == "Nothing"){
-        const url = `http://192.168.0.18:3000/device/${this.BoxID}/play`; 
+        const url = `http://${process.env.VUE_APP_CAST_IP}:${process.env.VUE_APP_CAST_PORT}/device/${this.BoxID}/play`; 
         console.log(url)
         axios.get(url)
         .then((response) =>{
@@ -234,7 +234,7 @@ export default {
               "auth-token": store.state.token,
             },
           };
-          const url = `http://127.0.0.1:8000/playback/start`;
+          const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/playback/start`;
           axios
           .post(url, postData, axiosConfig)
           .then(() => {
@@ -261,7 +261,7 @@ export default {
             "auth-token": store.state.token,
           },
         };
-        const url = `http://127.0.0.1:8000/playback/startsong`;
+        const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/playback/startsong`;
         axios
         .post(url, postData, axiosConfig)
         .then((response) => {

@@ -93,7 +93,7 @@ export default {
           "auth-token": store.state.token
         },
       };
-      const url = `http://127.0.0.1:8000/muziek/add`;
+      const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/muziek/add`;
       axios
         .post(url, postData , axiosConfig)
         .then((res) => {

@@ -81,7 +81,8 @@ export default {
           "Content-Type": "application/json;charset=UTF-8",
         },
       };
-      const url = `http://127.0.0.1:8000/auth/login`;
+      const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/auth/login`;
+      console.log("Mein URL: " + url);
       axios
         .post(url, postData, axiosConfig)
         .then((res) => {
@@ -92,15 +93,16 @@ export default {
           store.state.token = res.data.token;
           console.log(res.data);
 
-          jwt.verify(res.data.token, "mskjjkmsqfsdfqsdf", function (
-            err,
-            decoded
-          ) {
-            if (decoded != undefined) {
-              store.state.level = decoded.Level;
-              store.state.naam = decoded.Naam;
+          jwt.verify(
+            res.data.token,
+            "mskjjkmsqfsdfqsdf",
+            function (err, decoded) {
+              if (decoded != undefined) {
+                store.state.level = decoded.Level;
+                store.state.naam = decoded.Naam;
+              }
             }
-          });
+          );
           this.$router.push("/Dashboard");
         })
         .catch((err) => {
