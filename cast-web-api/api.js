@@ -4,8 +4,11 @@ const configuration = require("./lib/config/config.js");
 const cors = require("cors");
 const app = Express();
 
+var corsOptions = {
+  origin: ['http://localhost:8080'],
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 app.use(cors());
-
 // console.log('argv:');
 // console.log(process.argv);
 

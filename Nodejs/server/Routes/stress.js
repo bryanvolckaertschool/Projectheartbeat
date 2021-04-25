@@ -10,35 +10,35 @@ router.get("/", (req, res) => {
   res.send("Hello from the Project Heartbeats Playback API");
 });
 
-router.post("/meting", verify, (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  console.log(connection.escape(req.body))
-  let PersonID = connection.escape(req.body.PersonID);
-  let curHartslag = connection.escape(req.body.curHartslag);
-  let curSPO2 = connection.escape(req.body.curSPO2);
+router.post("/meting", (req, res) => {
+  //res.setHeader('Access-Control-Allow-Origin', '*')
+  console.log(req.body)
+  // let PersonID = connection.escape(req.body.PersonID);
+  // let curHartslag = connection.escape(req.body.curHartslag);
+  // let curSPO2 = connection.escape(req.body.curSPO2);
 
-  let sql = "SELECT * FROM users WHERE personid = " + PersonID;
+  // let sql = "SELECT * FROM users WHERE personid = " + PersonID;
 
-  connection.query(sql, async (err, result) => {
-    if(err) return res.status(400).send(err);
+  // connection.query(sql, async (err, result) => {
+  //   if(err) return res.status(400).send(err);
 
-    if(result != undefined) {
-      let baseHartslag =  result[0].baseHartslag;
-      let baseSPO2 = result[0].baseSPO2;
-      let Stress = stress(baseHartslag, baseSPO2, curHartslag, curSPO2)
-      flog(`eeftem stress?: ${Stress}`)
-      if(Stress)
-      {
+  //   if(result != undefined) {
+  //     let baseHartslag =  result[0].baseHartslag;
+  //     let baseSPO2 = result[0].baseSPO2;
+  //     let Stress = stress(baseHartslag, baseSPO2, curHartslag, curSPO2)
+  //     flog(`eeftem stress?: ${Stress}`)
+  //     if(Stress)
+  //     {
        
-        flog("starting playback person has stress")
-        Startplayback(PersonID);
-      }
-      res.status(200).send("Person Found");
-    }
-    else{
-      res.status(400).send("User not found");
-    }
-  });
+  //       flog("starting playback person has stress")
+  //       Startplayback(PersonID);
+  //     }
+       res.status(200).send("Person Found");
+  //   }
+  //   else{
+  //     res.status(400).send("User not found");
+  //   }
+  // });
 });
 
 function stress(basehartslag, basespo2, curhartslag, curspo2) {

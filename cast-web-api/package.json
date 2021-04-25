@@ -18,9 +18,10 @@
 		"cast-web-api": "./bin/cast-web-api"
 	},
 	"dependencies": {
-		"castv2": "*",
+		"castv2": "^0.1.10",
 		"castv2-client": "^1.2.0",
 		"chalk": "^2.4.1",
+		"cors": "^2.8.5",
 		"debug": "^2.6.9",
 		"express": "^4.16.3",
 		"google-auth-library": "0.10.0",
@@ -28,8 +29,8 @@
 		"http": "*",
 		"jsonfile": "*",
 		"mdns-cast-browser": ">1.0.2",
-		"minimist": "*",
-		"node-fetch": "^2.2.0",
+		"minimist": "^1.2.5",
+		"node-fetch": "^2.6.1",
 		"os": "*",
 		"url": "*"
 	},
