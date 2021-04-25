@@ -88,7 +88,11 @@ export default {
   methods: {
     retrieveIds: function(){
  
+<<<<<<< HEAD
         const url = `http://localhost:3000/device/`; 
+=======
+        const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/muziek/add/device/`; 
+>>>>>>> 46411d09cedaef1c43777a6aba972f785245c297
         axios.get(url)
         .then((response) =>{
           let speaker = []
@@ -123,7 +127,7 @@ export default {
             "auth-token": store.state.token,
           },
         };
-        const url = `http://127.0.0.1:8000/muziek/update`;
+        const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/muziek/update`;
         axios
           .post(url, postData, axiosConfig)
           .then((/* res */) => {

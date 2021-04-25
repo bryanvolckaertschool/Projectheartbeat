@@ -19,7 +19,7 @@
       <v-card-subtitle class="pb-0"
         >Vul onderstaande informatie in:</v-card-subtitle
       >
-      <v-form class="mx-6" ref="form" @submit.prevent="addUser">
+      <v-form class="mx-6" ref="form" @submit.prevent="addUser()">
         <v-container>
           <v-row>
             <v-col>
@@ -112,7 +112,11 @@ export default {
   methods: {
     retrieveIds: function(){
  
+<<<<<<< HEAD
         const url = `http://localhost:3000/device/`; 
+=======
+        const url = `http://${process.env.VUE_APP_MUSIC_IP}:${process.env.VUE_APP_MUSIC_PORT}/muziek/add`; 
+>>>>>>> 46411d09cedaef1c43777a6aba972f785245c297
         axios.get(url)
         .then((response) =>{
           let speaker = []
@@ -132,7 +136,7 @@ export default {
     equalise:function(selected){
       this.BoxID = selected
     },
-    addUser: function () {
+    addUser() {
       console.log(this.BoxID)
       var postData = {
         Naam : this.Naam,
@@ -147,7 +151,7 @@ export default {
           "auth-token": store.state.token
         },
       };
-      const url = `http://127.0.0.1:8000/users/create`;
+      const url = `http://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/users/create`;
       axios
         .post(url, postData , axiosConfig)
         .then((/* res */) => {
