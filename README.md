@@ -2,6 +2,13 @@
 
 ## Installation
 
+Run npm i in the following folders:
+    - Nodejs
+    - cast-web-api
+    - youtube-audio-server
+    - Nodejs
+
+
 Change .env variables to your servers
 Change db.js to your servers
 open cmd in the folder of the repo and do npm install
