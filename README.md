@@ -1,42 +1,33 @@
-### Project hearbeats
+# Project hearbeats
 
 ## Installation
 
-Run npm i in the following folders:
-    - Nodejs
-    - cast-web-api
-    - youtube-audio-server
-    - Nodejs
+Each sub-project has its own instructions on how to install, all off wich are shown in the README's
+ 
+ ## Summanary
+ 
+For a school project we were tasked with figguring out a way to measure the stress levels for a patient with alzheimers.
+When we detect stress, we have to start playback of a playlist defined by the users or admins. We chose to develop our own wearable to measure the heartrate to keep
+down cost and spare us the time of cracking open API's, protocols etc. of know (open source or commercial) wearables.
 
+The flow of measuring to playing music is shown in the following scheme:
+![Common error](Images/bigscheme.png)
+ 
+ ## ESP32ProjectHeartbeat
 
-Change .env variables to your servers
-Change db.js to your servers
-open cmd in the folder of the repo and do npm install
+This sub-project is our firmware for the ESP32 wich controls the AFE4404 sensor, sends the meassured data to the server on-site and wich in future versions will probably have extra sensors like: surface-temp, GSR and BMS.
 
+ ## Project-Heartbeats
 
+This sub-project's backend is our on-site server wich interfaces with the API's and recieves the data from the wearable. It also has a front-end powered by vuetify with its accompanying modules, with this front-end we can perform database manipulations like: adding playlists,music,patients etc.
 
-## How to use
+ ## modifiedyas
 
-# Music management:
+This sub-project provides the MP3 stream that the google-cast enabled device will play. this is based on downloading youtube music, converting it to mp3 and then providing a stream-based page that you can refer to.
 
-- Add (POST to /muziek/add) with arguments: PersonID, Naam, SongID, Duratie
-- Delete (DELETE to /muziek/delete) with arguments: PersonID, SongID
-- Show songs (POST to /muziek/show) with arguments: PersonID
+ ## modified_cast-web-api
 
-# User management:
+This sub-project is used as an interface between the google-cast enabled device and the back-end server. We use it to point the device to the right mp3 link based on the data it gets from the back-end. It can also be used to check the device's status.
 
-- Add (POST to /users/add) with arguments: Naam, SpeakerID, baseHartslag, baseSPO2, typeDementie
-- Show (POST to /users/show) with arguments: PersonID
-- Delete (DELETE to /users/delete) with arguments: PersonID
-
-# Admin management:
-
-- Register (POST to /auth/register) with arguments: Naam, Email, Wachtwoord
-- Login (POST to /auth/login) with arguments: Email, Wachtwoord
-- show (POST to /auth/show)
-- Delete (DELETE to /auth/delete) with arguments: ID
-
-# Playback:
-
-- Start (POST to /playback/start) with arguments: PersonID
-- Stop (POST to /playback/stop) with arguments: PersonID
+ 
+ 
