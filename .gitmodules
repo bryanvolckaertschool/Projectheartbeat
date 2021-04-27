@@ -1,3 +1,6 @@
 [submodule "Project-Heartbeats"]
 	path = Project-Heartbeats
 	url = https://github.com/MelvinDevos/Project-Heartbeats.git
+[submodule "modifiedyas"]
+	path = modifiedyas
+	url = https://github.com/bryanvolckaertschool/modifiedyas.git
