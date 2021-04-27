@@ -1,4 +1,4 @@
-### Project hearbeat
+### Project hearbeats
 
 ## Installation
 
