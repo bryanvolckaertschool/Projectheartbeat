@@ -11,7 +11,7 @@ When we detect stress, we must start playback of a playlist defined by the users
 down cost and spare us the time of cracking open API's, protocols etc. of know (open source or commercial) wearables.
 
 The flow of measuring to playing music is shown in the following scheme:
-![Common error](_Images/bigscheme.png)
+![Common error](bigscheme.png)
  
  ## ESP32ProjectHeartbeat
 
