@@ -4,3 +4,9 @@
 [submodule "modifiedyas"]
 	path = modifiedyas
 	url = https://github.com/bryanvolckaertschool/modifiedyas.git
+[submodule "modified_cast-web-api"]
+	path = modified_cast-web-api
+	url = https://github.com/bryanvolckaertschool/modified_cast-web-api.git
+[submodule "ESP32ProjectHeartbeat"]
+	path = ESP32ProjectHeartbeat
+	url = https://github.com/bryanvolckaertschool/ESP32ProjectHeartbeat.git
